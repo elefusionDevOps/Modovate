@@ -12,3 +12,21 @@ id = "m2g0Qmcymbi3oUTSvHIVB"
 uri = "file://artifacts/modovate/public/roof-satellite.png"
 type = "image"
 title = "generated_image"
+
+[[generated]]
+id = "qCwUElCFLztQKwBM89m-i"
+uri = "file://artifacts/modovate/public/hp-lennox.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "F5gNfRB5_IaU03R-yabxY"
+uri = "file://artifacts/modovate/public/hp-mitsubishi.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "vnTBNzZbnDxViJ4r7Omfr"
+uri = "file://artifacts/modovate/public/hp-bosch.png"
+type = "image"
+title = "generated_image"
