@@ -1,0 +1,14 @@
+Hi Mark,
+Following up on the last email, I’ve reviewed the documentation and the wireframes. To ensure we don't diverge during this first week of development, I have a few specific questions regarding the execution:
+1. Design & Visual Clarity
+The "No-Line" Rule: The design system explicitly forbids 1px borders, relying instead on background color shifts like #faf9f6 and #f4f3f0 to define sections. Are we confident these subtle tonal shifts will be distinct enough on different hardware, such as older office projectors or tablets, during a live pitch?
+Mobile vs. Desktop: While the guide mentions a requirement for the iPhone 15 Pro (390px width), will the primary investor demos be conducted on desktop/laptop? Knowing which to prioritize for the "first impression" will help us polish the right breakpoints first.
+2. User Flow & Navigation
+Linear vs. Non-Linear: The guide describes a sequential 8-screen journey. If an investor wants to go back from the ROI Dashboard (Screen 8) to change an equipment selection on Screen 5, should the app support a "backwards" state update, or is this intended to be a strictly one-way walkthrough?.
+"Download Report" Functionality: For the CTA on Screen 8, would a standard browser window.print() (saving the page as a PDF) suffice for the POC, or do you need us to generate a specific, formatted PDF asset?.
+3. Data & Calculation Logic
+Non-Demo Addresses: The "wow" moment on Screen 3 relies on mocked property data. If an investor enters an address that is not in our 3-5 pre-loaded examples, the fallback data (e.g., 1,400 sq ft, 1987 build) might conflict with the real satellite image they see. How would you like us to handle this potential discrepancy during a live demo?
+Rebate Stacking: On Screen 6, should the rebate list dynamically filter based on the equipment added? For example, if a user skips the Heat Pump, should the Enbridge HER+ and Greener Homes Grant be hidden entirely, or shown as "available if selected"?.
+We’re ready to hit the ground running once these are cleared up. As you suggested, I’m happy to hop on a quick call if that’s easier to resolve these upfront .
+Best,
+Arjyabir

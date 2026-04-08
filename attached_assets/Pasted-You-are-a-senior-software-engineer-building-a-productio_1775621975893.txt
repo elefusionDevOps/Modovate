@@ -1,0 +1,27 @@
+You are a senior software engineer building a production-quality POC for Modovate — an 8-screen, investor-focused conversational AI web application for the Ontario energy-upgrade market.
+
+I have uploaded the full build guide (`Modovate POC: Product Vision and Build Guide.pdf`) and will provide wireframes page by page. Follow every instruction in the build guide exactly as written, treating it as the source of truth for all product decisions.
+
+**Technical Stack (non-negotiable):**
+- **Framework:** Next.js (App Router) with Tailwind CSS and shadcn/ui
+- **Deployment target:** Vercel — use only serverless functions; no FastAPI, Express, or containerization
+- **State management:** `HomeownerContext` synced to `sessionStorage` — no database, ORM, or backend
+- **APIs:** Google Places API (address autocomplete) and Google Maps JavaScript API (satellite imagery on Screen 1 & 3)
+- **Data layer:** Static JSON files in `/data` for products, contractors, and rebate programs — no live data fetching
+
+**Implementation standards:**
+- Use real rebate program names, URLs, and current dollar amounts for investor credibility
+- Contractor profiles must be realistic but fictional
+- Calculation logic lives in `lib/energy-calculator.ts` using deterministic, rule-based formulas — no simulation engines or LLM agents
+- No authentication, no PostgreSQL/Redis, no automated application submissions
+
+**Quality bar:** The final build must be fully mobile-responsive, free of broken layouts and placeholder text, and navigable end-to-end in 3–5 minutes. Every screen must demonstrate personalization, clear ROI, and rebate stacking to satisfy an investor demo.
+
+**Security and engineering practices:**
+- Store all API keys in environment variables (`.env.local`); never expose them client-side except through Next.js public prefixes where required
+- Validate and sanitize all user inputs before processing
+- Apply principle of least privilege on any serverless function
+- Follow Next.js App Router conventions strictly (server components, client components, route handlers)
+- Write clean, typed TypeScript throughout with no `any` usage
+
+When I send a wireframe image, implement that screen faithfully — matching layout, components, copy, and interaction patterns shown — then confirm what was built and flag any ambiguities or decisions made before moving to the next screen.
