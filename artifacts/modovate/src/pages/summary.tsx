@@ -170,12 +170,12 @@ export default function Summary() {
         <div className="grid grid-cols-5 gap-6 mb-12">
           <div className="col-span-3 space-y-6">
             <div>
-              <h2 className="font-display font-bold text-[22px] text-foreground tracking-tight mb-5">
+              <h2 className="font-display font-bold text-[22px] text-foreground tracking-tight mb-10">
                 Investment Payback Timeline
               </h2>
               <div className="relative mb-4">
                 <div className="relative">
-                  <div className="absolute -top-8 z-10" style={{ left: `${Math.min(95, (paybackYear / 15) * 100)}%`, transform: "translateX(-50%)" }}>
+                  <div className="absolute -top-7 z-10" style={{ left: `${Math.min(95, (paybackYear / 15) * 100)}%`, transform: "translateX(-50%)" }}>
                     <div className="bg-foreground text-background text-[10px] font-bold px-2 py-1 rounded whitespace-nowrap">
                       Estimated Payback Point
                     </div>
