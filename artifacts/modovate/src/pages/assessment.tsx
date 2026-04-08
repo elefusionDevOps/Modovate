@@ -43,12 +43,12 @@ export default function Assessment() {
   const roofAreaSqft = Math.round(profile.roofAreaSqm * 10.764);
 
   const propertyCards = [
-    { icon: Home, label: "Property Size", value: profile.estimatedSqft.toLocaleString() + " sq ft" },
-    { icon: Calendar, label: "Year Built", value: profile.yearBuilt.toString() },
-    { icon: ArrowUpRight, label: "Estimated Roof Area", value: roofAreaSqft.toLocaleString() + " sq ft" },
-    { icon: Thermometer, label: "Climate Zone", value: profile.climateZone },
-    { icon: DollarSign, label: "Annual Energy Cost", value: "$" + annualEnergyCost.toLocaleString() },
-    { icon: Activity, label: "Current Energy Rating", value: performanceLabel },
+    { icon: Home, label: "Property Size", value: profile.estimatedSqft.toLocaleString() + " sq ft", highlight: false },
+    { icon: Calendar, label: "Year Built", value: profile.yearBuilt.toString(), highlight: false },
+    { icon: ArrowUpRight, label: "Estimated Roof Area", value: roofAreaSqft.toLocaleString() + " sq ft", highlight: false },
+    { icon: Thermometer, label: "Climate Zone", value: profile.climateZone, highlight: false },
+    { icon: DollarSign, label: "Annual Energy Cost", value: "$" + annualEnergyCost.toLocaleString(), highlight: false },
+    { icon: Activity, label: "Current Energy Rating", value: performanceLabel, highlight: true },
   ];
 
   const basePath = import.meta.env.BASE_URL || "/";
@@ -58,7 +58,7 @@ export default function Assessment() {
       <header className="w-full px-8 py-4 flex items-center justify-between bg-background z-10">
         <span className="font-display font-bold text-xl tracking-tight text-foreground">Modovate</span>
         <nav className="flex items-center gap-6">
-          <span className="text-sm font-medium text-foreground border-b-2 border-foreground pb-0.5">Property Assessment</span>
+          <span className="text-sm font-semibold text-foreground">Property Assessment</span>
           <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Solutions</a>
           <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Support</a>
           <button
@@ -92,15 +92,17 @@ export default function Assessment() {
           {propertyCards.map((card) => (
             <div
               key={card.label}
-              className="bg-card border border-border/50 rounded-xl p-5 flex items-start gap-4"
+              className="bg-card border border-border/50 rounded-2xl p-6 flex items-start gap-4"
               data-testid={`card-${card.label.toLowerCase().replace(/\s+/g, "-")}`}
             >
-              <div className="w-10 h-10 rounded-lg bg-primary/8 flex items-center justify-center flex-shrink-0">
-                <card.icon className="h-5 w-5 text-primary/70" />
+              <div className="w-11 h-11 rounded-xl bg-[#e8f0f0] flex items-center justify-center flex-shrink-0">
+                <card.icon className="h-5 w-5 text-primary" strokeWidth={2.2} />
               </div>
               <div className="min-w-0">
-                <p className="text-[11px] font-semibold tracking-widest uppercase text-muted-foreground mb-1">{card.label}</p>
-                <p className="text-xl font-display font-bold text-foreground leading-tight">{card.value}</p>
+                <p className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground/70 mb-1.5">{card.label}</p>
+                <p className={`text-[22px] font-display font-bold leading-tight ${card.highlight ? "text-secondary" : "text-foreground"}`}>
+                  {card.value}
+                </p>
               </div>
             </div>
           ))}
@@ -109,7 +111,7 @@ export default function Assessment() {
         <div className="bg-card border border-border/50 rounded-xl p-8 space-y-6">
           <div className="flex items-center justify-between">
             <h2 className="font-display font-bold text-xl text-foreground">Performance Analysis</h2>
-            <span className="text-xs font-semibold tracking-wide uppercase px-3 py-1.5 rounded-full border border-border bg-muted/50 text-muted-foreground">
+            <span className="text-xs font-medium px-3 py-1.5 rounded-full border border-[#c5cfc0] bg-[#f0f4ed] text-[#4a6741]">
               Status: Action Recommended
             </span>
           </div>
@@ -156,7 +158,7 @@ export default function Assessment() {
             </p>
             <div className="text-right flex-shrink-0">
               <p className="text-3xl font-display font-bold text-foreground">${potentialSavings.toLocaleString()}</p>
-              <p className="text-[11px] font-semibold tracking-widest uppercase text-secondary mt-1">Potential Savings / Yr</p>
+              <p className="text-[11px] font-semibold tracking-widest uppercase text-[#4a6741] mt-1">Potential Savings / Yr</p>
             </div>
           </div>
         </div>
