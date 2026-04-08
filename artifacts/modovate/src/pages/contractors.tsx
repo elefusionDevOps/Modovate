@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
-import { Star, MapPin, Bell, User, ArrowRight, CheckCircle } from "lucide-react";
+import { Star, MapPin, Bell, User, ArrowRight, CheckCircle, ChevronLeft } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
@@ -45,7 +45,17 @@ export default function Contractors() {
   return (
     <div className="min-h-[100dvh] bg-background flex flex-col font-sans">
       <header className="w-full px-8 py-5 flex items-center justify-between">
-        <span className="font-display font-bold text-xl tracking-tight text-foreground">Modovate</span>
+        <div className="flex items-center gap-4">
+          <button
+            onClick={() => setLocation("/rebates")}
+            className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors"
+            data-testid="button-back"
+          >
+            <ChevronLeft className="h-4 w-4" />
+            Back
+          </button>
+          <span className="font-display font-bold text-xl tracking-tight text-foreground">Modovate</span>
+        </div>
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 rounded-full border border-border flex items-center justify-center">
             <Bell className="h-4 w-4 text-muted-foreground" />

@@ -2,7 +2,7 @@ import { useEffect, useMemo } from "react";
 import { useLocation } from "wouter";
 import {
   Snowflake, Home, Zap, Sun, Car, BatteryCharging, LayoutGrid,
-  Compass, TrendingUp, Headphones, Flag, ArrowRight,
+  Compass, TrendingUp, Headphones, Flag, ArrowRight, ChevronLeft,
 } from "lucide-react";
 import { useHomeowner } from "@/context/HomeownerContext";
 import { getRecommendations, lookupAddressProfile } from "@/lib/energy-calculator";
@@ -91,6 +91,14 @@ export default function Recommendations() {
           ))}
         </nav>
 
+        <button
+          onClick={() => setLocation("/assessment")}
+          className="w-full py-3 rounded-xl border border-border text-foreground text-sm font-medium hover:bg-muted/50 transition-colors mb-2"
+          data-testid="button-back-assessment"
+        >
+          <ChevronLeft className="h-4 w-4 inline mr-1" />
+          Back
+        </button>
         <button
           onClick={() => setLocation("/rebates")}
           className="w-full py-3 rounded-xl bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-colors"

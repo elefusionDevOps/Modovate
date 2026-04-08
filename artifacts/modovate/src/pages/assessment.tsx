@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from "react";
 import { useLocation } from "wouter";
-import { MapPin, LayoutGrid, Calendar, Home, Flag, Banknote, Gauge, ArrowRight } from "lucide-react";
+import { MapPin, LayoutGrid, Calendar, Home, Flag, Banknote, Gauge, ArrowRight, ChevronLeft } from "lucide-react";
 import { useHomeowner } from "@/context/HomeownerContext";
 import { lookupAddressProfile, getEnerGuideRating, getEstimatedAnnualEnergyCost } from "@/lib/energy-calculator";
 import type { HeatingSystem } from "@/lib/energy-calculator";
@@ -56,16 +56,26 @@ export default function Assessment() {
   return (
     <div className="min-h-[100dvh] bg-background flex flex-col font-sans">
       <header className="w-full px-8 py-4 flex items-center justify-between bg-background z-10">
-        <span className="font-display font-bold text-xl tracking-tight text-foreground">Modovate</span>
+        <div className="flex items-center gap-4">
+          <button
+            onClick={() => setLocation("/intake")}
+            className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors"
+            data-testid="button-back"
+          >
+            <ChevronLeft className="h-4 w-4" />
+            Back
+          </button>
+          <span className="font-display font-bold text-xl tracking-tight text-foreground">Modovate</span>
+        </div>
         <nav className="flex items-center gap-6">
           <span className="text-sm font-semibold text-foreground">Property Assessment</span>
           <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Solutions</a>
           <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Support</a>
           <button
             onClick={() => setLocation("/")}
-            className="text-sm font-semibold text-foreground hover:text-primary transition-colors"
+            className="text-sm text-muted-foreground hover:text-foreground hover:text-primary transition-colors"
           >
-            Edit Address
+            New Assessment
           </button>
         </nav>
       </header>

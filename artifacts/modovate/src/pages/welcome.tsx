@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useLocation } from "wouter";
 import { MapPin, Home, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -7,16 +7,23 @@ const satelliteImg = `${import.meta.env.BASE_URL}satellite-placeholder.png`;
 
 export default function Welcome() {
   const [, setLocation] = useLocation();
-  const { setAddress, resetState, setCurrentScreen } = useHomeowner();
+  const { address, currentScreen, setAddress, resetState } = useHomeowner();
   const [inputValue, setInputValue] = useState("");
+  const hasExistingSession = !!(address && currentScreen > 1);
 
-  useEffect(() => {
-    resetState();
-    setCurrentScreen(1);
-  }, [resetState, setCurrentScreen]);
+  const screenRoutes: Record<number, string> = {
+    2: "/intake",
+    3: "/assessment",
+    4: "/recommendations",
+    5: "/equipment/heat_pump",
+    6: "/rebates",
+    7: "/contractors",
+    8: "/summary",
+  };
 
   const handleContinue = () => {
     if (!inputValue.trim()) return;
+    resetState();
     setAddress(inputValue);
     setLocation("/intake");
   };
@@ -91,6 +98,15 @@ export default function Welcome() {
             >
               Get My Home Energy Report
             </Button>
+            {hasExistingSession && (
+              <button
+                onClick={() => setLocation(screenRoutes[currentScreen] || "/intake")}
+                className="text-sm font-semibold text-primary hover:text-primary/80 transition-colors underline underline-offset-2"
+                data-testid="button-continue-session"
+              >
+                Continue where you left off
+              </button>
+            )}
             <p className="text-sm text-muted-foreground">
               Built for Ontario's <span className="font-bold text-foreground">$11 billion</span> in available energy incentives.
             </p>

@@ -46,14 +46,22 @@ Modovate is an 8-screen, investor-focused conversational AI web app for the Cana
 
 ## 8-Screen Journey (All Built and Working)
 
-1. **`/` — Welcome / Address Entry** — Address input + satellite placeholder + amber CTA
-2. **`/intake` — Conversational Intake** — Chat-bubble wizard, selectable chips, 400ms delay, progress bar
-3. **`/assessment` — Property Assessment** — Satellite placeholder + 6 property data cards + EnerGuide rating bar
-4. **`/recommendations` — Upgrade Recommendations** — Two-column card grid, prioritized by intake, rebate badges
-5. **`/equipment` — Equipment Options** — 3 heat pump product cards with Best Match badge, specs, pricing
-6. **`/rebates` — Rebate Summary** — Hero banner with total + individual program cards (grants + loans)
-7. **`/contractors` — Contractor Match** — 3 GTA contractor cards + Request Quote modal with form
-8. **`/summary` — ROI Dashboard** — Hero metrics, payback timeline, 10-year savings chart, CO2 reduction badge
+1. **`/` — Welcome / Address Entry** — Address input + satellite placeholder + amber CTA + "Continue where you left off" link when session exists
+2. **`/intake` — Conversational Intake** — Chat-bubble wizard, selectable chips, 400ms delay, progress bar, back button navigates through questions then to welcome
+3. **`/assessment` — Property Assessment** — Back to intake + satellite placeholder + 6 property data cards + EnerGuide rating bar
+4. **`/recommendations` — Upgrade Recommendations** — Sidebar back to assessment + two-column card grid, prioritized by intake, rebate badges
+5. **`/equipment/:category` — Equipment Options** — Back to recommendations + dynamic category routing for all 7 upgrade types
+6. **`/rebates` — Rebate Summary** — Back to recommendations + hero banner with total + individual program cards (grants + loans)
+7. **`/contractors` — Contractor Match** — Back to rebates + 3 GTA contractor cards + Request Quote modal with form
+8. **`/summary` — ROI Dashboard** — Back to contractors + hero metrics, payback timeline, 10-year savings chart, CO2 reduction badge, downloadable HTML report
+
+## Navigation & State
+
+- **Back/Forward**: Every screen has a back button returning to the previous step in the linear flow
+- **State Persistence**: `HomeownerContext` stores all data in `sessionStorage` — survives page refreshes
+- **Session Resume**: Welcome page detects existing session and offers "Continue where you left off" link
+- **New Assessment**: Starting a new address explicitly resets state before navigating to intake
+- **Report Download**: Summary page generates a styled HTML report with actual calculated data
 
 ## File Structure
 

@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from "react";
 import { useLocation } from "wouter";
-import { ExternalLink, Shield, CheckCircle, User, Settings } from "lucide-react";
+import { ExternalLink, Shield, CheckCircle, User, Settings, ChevronLeft } from "lucide-react";
 import { useHomeowner } from "@/context/HomeownerContext";
 import { getApplicableRebates } from "@/lib/energy-calculator";
 import type { UpgradeCategory } from "@/lib/energy-calculator";
@@ -37,11 +37,21 @@ export default function Rebates() {
   return (
     <div className="min-h-[100dvh] bg-background flex flex-col font-sans">
       <header className="w-full px-8 py-4 flex items-center justify-between bg-background border-b border-border/30">
-        <span className="font-display font-bold text-xl tracking-tight text-foreground">Modovate</span>
+        <div className="flex items-center gap-4">
+          <button
+            onClick={() => setLocation("/recommendations")}
+            className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors"
+            data-testid="button-back"
+          >
+            <ChevronLeft className="h-4 w-4" />
+            Back
+          </button>
+          <span className="font-display font-bold text-xl tracking-tight text-foreground">Modovate</span>
+        </div>
         <nav className="flex items-center gap-6">
           <button onClick={() => setLocation("/assessment")} className="text-sm text-muted-foreground hover:text-foreground transition-colors">Home Profile</button>
           <button onClick={() => setLocation("/recommendations")} className="text-sm text-muted-foreground hover:text-foreground transition-colors">Energy Journey</button>
-          <span className="text-sm font-semibold text-foreground border-b-2 border-foreground pb-0.5">Rebates</span>
+          <span className="text-sm font-semibold text-foreground">Rebates</span>
           <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Support</a>
         </nav>
         <div className="flex items-center gap-3">
