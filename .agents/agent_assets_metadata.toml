@@ -36,3 +36,9 @@ id = "M0pS6xYeb3byh-jw_ZFCR"
 uri = "file://artifacts/modovate/public/modern-home-solar.png"
 type = "image"
 title = "generated_image"
+
+[[generated]]
+id = "x-e7a_H2DLO73MNHjWlYG"
+uri = "file://artifacts/modovate/public/map-dark.png"
+type = "image"
+title = "generated_image"
