@@ -1,7 +1,7 @@
 {
   "heat_pump": {
     "label": "Cold Climate Heat Pump",
-    "description": "Replace your existing heating system with an energy-efficient cold climate heat pump that provides both heating and cooling.",
+    "description": "Replace your gas furnace and cut your heating costs by up to 50%.",
     "products": [
       {
         "id": "mitsubishi-zuba",
@@ -45,8 +45,8 @@
     ]
   },
   "insulation": {
-    "label": "Insulation Upgrade",
-    "description": "Improve your home's thermal envelope with modern insulation to reduce heat loss and lower energy bills.",
+    "label": "Insulation and Air Sealing",
+    "description": "Seal heat loss and reduce your heating load before winter.",
     "products": [
       {
         "id": "demilec-spray-foam",
@@ -91,7 +91,7 @@
   },
   "electrical_panel": {
     "label": "Electrical Panel Upgrade",
-    "description": "Upgrade to a 200A panel to support modern electrical loads including heat pumps, EV chargers, and solar PV systems.",
+    "description": "Upgrade your panel to support a heat pump, EV charger, and future solar.",
     "products": [
       {
         "id": "siemens-200a",
@@ -136,7 +136,7 @@
   },
   "solar_pv": {
     "label": "Solar PV System",
-    "description": "Generate clean electricity from your roof with a solar photovoltaic system, reducing grid dependence and electricity costs.",
+    "description": "Generate your own electricity and reduce grid dependence.",
     "products": [
       {
         "id": "lg-neon-r",
@@ -180,8 +180,8 @@
     ]
   },
   "ev_charger": {
-    "label": "EV Charger Installation",
-    "description": "Install a Level 2 home EV charger for convenient overnight charging of your electric vehicle.",
+    "label": "EV Charging Station",
+    "description": "Add a Level 2 home charger for your current or future electric vehicle.",
     "products": [
       {
         "id": "flo-g5",
@@ -226,7 +226,7 @@
   },
   "battery_storage": {
     "label": "Battery Storage",
-    "description": "Store solar energy or grid power for backup and peak-shaving to maximize energy independence.",
+    "description": "Store solar energy and protect your home from grid outages.",
     "products": [
       {
         "id": "tesla-powerwall3",
@@ -271,7 +271,7 @@
   },
   "windows": {
     "label": "Window Replacement",
-    "description": "Replace drafty single or double-pane windows with high-performance triple-pane windows to reduce heat loss.",
+    "description": "Triple-pane windows reduce heat loss and improve comfort in cold months.",
     "products": [
       {
         "id": "pella-350-triple",

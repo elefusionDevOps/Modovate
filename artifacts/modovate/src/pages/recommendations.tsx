@@ -1,153 +1,220 @@
 import { useEffect, useMemo } from "react";
 import { useLocation } from "wouter";
-import { Thermometer, Home, Zap, Sun, Car, Battery, SquareStack, ArrowRight, CheckCircle } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import {
+  Snowflake, Home, Zap, Sun, Car, BatteryCharging, LayoutGrid,
+  Compass, TrendingUp, Headphones, Flag, ArrowRight,
+} from "lucide-react";
 import { useHomeowner } from "@/context/HomeownerContext";
-import { getRecommendations } from "@/lib/energy-calculator";
-import type { UpgradeCategory, UpgradeRecommendation } from "@/lib/energy-calculator";
-import Layout from "@/components/layout";
+import { getRecommendations, lookupAddressProfile } from "@/lib/energy-calculator";
+import type { UpgradeRecommendation, IntakeAnswers } from "@/lib/energy-calculator";
 
-const categoryIcons: Record<string, typeof Thermometer> = {
-  heat_pump: Thermometer,
+const categoryIcons: Record<string, typeof Snowflake> = {
+  heat_pump: Snowflake,
   insulation: Home,
   electrical_panel: Zap,
   solar_pv: Sun,
   ev_charger: Car,
-  battery_storage: Battery,
-  windows: SquareStack,
+  battery_storage: BatteryCharging,
+  windows: LayoutGrid,
 };
+
+const categoryTags: Record<string, { label: string; color: string }[]> = {
+  heat_pump: [],
+  insulation: [],
+  electrical_panel: [{ label: "Future Ready", color: "text-[#b8860b] bg-[#fef9e7] border-[#f0e0a0]" }],
+  solar_pv: [{ label: "30% Tax Credit", color: "text-[#4a6741] bg-[#f0f4ed] border-[#c5cfc0]" }],
+  ev_charger: [{ label: "Convenience", color: "text-[#b8860b] bg-[#fef9e7] border-[#f0e0a0]" }],
+  battery_storage: [{ label: "Energy Security", color: "text-[#4a6741] bg-[#f0f4ed] border-[#c5cfc0]" }],
+  windows: [{ label: "Federal Tax Credit", color: "text-[#4a6741] bg-[#f0f4ed] border-[#c5cfc0]" }],
+};
+
+const sidebarItems = [
+  { icon: Compass, label: "Overview" },
+  { icon: TrendingUp, label: "Upgrades", active: true },
+  { icon: Flag, label: "Savings" },
+  { icon: Headphones, label: "Support" },
+];
 
 export default function Recommendations() {
   const [, setLocation] = useLocation();
-  const { intakeAnswers, homeProfile, selectedUpgrades, toggleUpgrade, setCurrentScreen } = useHomeowner();
+  const { intakeAnswers, homeProfile, setCurrentScreen } = useHomeowner();
 
   useEffect(() => {
     setCurrentScreen(4);
   }, [setCurrentScreen]);
 
+  const defaultIntake: IntakeAnswers = {
+    heatingSystem: "gas_furnace",
+    homeSize: "medium",
+    utilityTypes: ["natural_gas", "electricity"],
+    annualUtilitySpend: "2000_3500",
+    primaryGoals: ["lower_bills", "comfort"],
+  };
+
   const recommendations = useMemo(() => {
-    if (!intakeAnswers || !homeProfile) return [];
-    return getRecommendations(intakeAnswers, homeProfile);
+    const intake = intakeAnswers || defaultIntake;
+    const profile = homeProfile || lookupAddressProfile("142 Maple Street, Toronto, ON");
+    return getRecommendations(intake, profile);
   }, [intakeAnswers, homeProfile]);
 
   const handleExplore = (rec: UpgradeRecommendation) => {
     if (rec.category === "heat_pump") {
       setLocation("/equipment");
     } else {
-      toggleUpgrade(rec.category);
+      setLocation("/equipment");
     }
   };
 
-  const isSelected = (category: UpgradeCategory) => selectedUpgrades.includes(category);
+  const getRebateText = (rec: UpgradeRecommendation) => {
+    if (!rec.hasRebates) return null;
+    const rebateMax = Math.round(rec.costMax * 0.2);
+    return `Up to $${rebateMax.toLocaleString()} rebate`;
+  };
 
   return (
-    <Layout step={4}>
-      <div className="container mx-auto max-w-5xl px-4 sm:px-6 py-8 space-y-8 animate-in fade-in duration-500">
-        <div>
-          <h1 className="font-display font-bold text-3xl sm:text-4xl text-foreground tracking-tight">
-            Your Personalized Upgrade Plan
-          </h1>
-          <p className="text-muted-foreground mt-2 text-lg">
-            Based on your home profile and goals, we recommend these energy upgrades.
-          </p>
+    <div className="min-h-[100dvh] bg-background flex font-sans">
+      <aside className="w-[200px] flex-shrink-0 border-r border-border/30 flex flex-col py-6 px-4 sticky top-0 h-screen">
+        <div className="mb-10">
+          <span className="font-display font-bold text-xl tracking-tight text-foreground">Modovate</span>
+          <p className="text-[10px] tracking-[0.15em] uppercase text-muted-foreground/60 mt-0.5">Architectural Advisor</p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-5">
-          {recommendations.map((rec) => {
-            const Icon = categoryIcons[rec.category] || Zap;
-            const selected = isSelected(rec.category);
+        <nav className="flex-1 space-y-1">
+          {sidebarItems.map((item) => (
+            <button
+              key={item.label}
+              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                item.active
+                  ? "text-foreground bg-muted/50"
+                  : "text-muted-foreground hover:text-foreground hover:bg-muted/30"
+              }`}
+            >
+              <item.icon className="h-4 w-4" />
+              {item.label}
+            </button>
+          ))}
+        </nav>
 
-            return (
-              <Card
-                key={rec.category}
-                className={`border transition-all duration-200 ${
-                  selected ? "border-primary shadow-md ring-1 ring-primary/20" : "border-border/50 shadow-sm hover:shadow-md"
-                }`}
-                data-testid={`card-recommendation-${rec.category}`}
-              >
-                <CardContent className="p-6 space-y-4">
-                  <div className="flex items-start justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center">
-                        <Icon className="h-5 w-5 text-primary" />
-                      </div>
-                      <div>
-                        <h3 className="font-display font-bold text-lg text-foreground">{rec.label}</h3>
-                        {rec.priority === "high" && (
-                          <Badge variant="default" className="mt-1 bg-primary/10 text-primary border-0 text-xs">
-                            High Priority
-                          </Badge>
-                        )}
-                        {rec.priority === "medium" && (
-                          <Badge variant="secondary" className="mt-1 text-xs">Recommended</Badge>
-                        )}
-                      </div>
+        <button
+          onClick={() => setLocation("/rebates")}
+          className="w-full py-3 rounded-xl bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-colors"
+          data-testid="button-review-plan"
+        >
+          Review Plan
+        </button>
+      </aside>
+
+      <div className="flex-1 flex flex-col">
+        <header className="w-full px-8 py-5 flex items-center justify-end">
+          <span className="text-sm font-medium text-muted-foreground">Step 3 of 8</span>
+        </header>
+
+        <main className="flex-1 px-8 pb-12 max-w-[880px]">
+          <div className="mb-8">
+            <h1 className="font-display font-bold text-[32px] leading-tight text-foreground tracking-tight">
+              Your Personalized Upgrade Plan
+            </h1>
+            <p className="text-muted-foreground mt-2 text-[15px] leading-relaxed max-w-[560px]">
+              Based on your home profile, here are the upgrades with the highest impact for your situation.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 gap-5">
+            {recommendations.map((rec) => {
+              const Icon = categoryIcons[rec.category] || Zap;
+              const isRecommended = rec.priority === "high" || rec.priority === "medium";
+              const tags = categoryTags[rec.category] || [];
+              const rebateText = getRebateText(rec);
+              const savingsAvg = Math.round((rec.annualSavingsMin + rec.annualSavingsMax) / 2);
+              const isLastOddItem = recommendations.length % 2 !== 0 && recommendations.indexOf(rec) === recommendations.length - 1;
+
+              return (
+                <div
+                  key={rec.category}
+                  className={`bg-card border border-border/50 rounded-2xl p-6 flex flex-col ${isLastOddItem ? "col-span-2 max-w-[calc(50%-10px)]" : ""}`}
+                  data-testid={`card-recommendation-${rec.category}`}
+                >
+                  <div className="flex items-start justify-between mb-4">
+                    <div>
+                      {isRecommended && (
+                        <span className="inline-block text-[10px] font-bold tracking-[0.1em] uppercase px-2.5 py-1 rounded bg-primary text-primary-foreground mb-3">
+                          Recommended
+                        </span>
+                      )}
+                      <h3 className="font-display font-bold text-lg text-foreground leading-snug">{rec.label}</h3>
                     </div>
-                    {selected && <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />}
+                    <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center flex-shrink-0 ml-3">
+                      <Icon className="h-5 w-5 text-primary-foreground" />
+                    </div>
                   </div>
 
-                  <p className="text-sm text-muted-foreground leading-relaxed">{rec.description}</p>
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-5 flex-1">
+                    {rec.description}
+                  </p>
 
-                  <div className="flex flex-wrap gap-2">
-                    <Badge variant="outline" className="text-xs font-medium">
-                      ${rec.costMin.toLocaleString()} – ${rec.costMax.toLocaleString()}
-                    </Badge>
-                    <Badge variant="outline" className="text-xs font-medium text-green-700 border-green-200 bg-green-50">
-                      Save ${rec.annualSavingsMin.toLocaleString()} – ${rec.annualSavingsMax.toLocaleString()}/yr
-                    </Badge>
-                    {rec.hasRebates && (
-                      <Badge className="text-xs bg-secondary/10 text-secondary border-secondary/20 border">
-                        Rebates Available
-                      </Badge>
-                    )}
+                  <div className="space-y-3 mb-5">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="text-xs text-muted-foreground">
+                        ~${rec.costMin.toLocaleString()} to ${rec.costMax.toLocaleString()} installed
+                      </span>
+                      <span className="text-xs font-semibold text-[#4a6741] bg-[#e8f5e2] px-2 py-0.5 rounded">
+                        Save ~${savingsAvg.toLocaleString()}/yr
+                      </span>
+                    </div>
+                    <div className="flex flex-wrap items-center gap-2">
+                      {rebateText && (
+                        <span className="text-xs text-muted-foreground">{rebateText}</span>
+                      )}
+                      {tags.map((tag) => (
+                        <span
+                          key={tag.label}
+                          className={`text-[11px] font-medium px-2 py-0.5 rounded border ${tag.color}`}
+                        >
+                          {tag.label}
+                        </span>
+                      ))}
+                    </div>
                   </div>
 
-                  <Button
+                  <button
                     onClick={() => handleExplore(rec)}
-                    variant={selected ? "outline" : "default"}
-                    className={`w-full rounded-full ${
-                      rec.category === "heat_pump" && !selected
-                        ? "bg-secondary hover:bg-secondary/90 text-secondary-foreground"
-                        : selected
-                        ? ""
-                        : "bg-primary hover:bg-primary/90 text-primary-foreground"
-                    }`}
+                    className="w-full py-3 rounded-xl bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-colors"
                     data-testid={`button-explore-${rec.category}`}
                   >
-                    {rec.category === "heat_pump" ? (
-                      <>Explore Equipment Options <ArrowRight className="ml-2 h-4 w-4" /></>
-                    ) : selected ? (
-                      "Remove from Project"
-                    ) : (
-                      "Add to Project"
-                    )}
-                  </Button>
-                </CardContent>
-              </Card>
-            );
-          })}
-        </div>
-
-        {selectedUpgrades.length > 0 && (
-          <div className="bg-card border border-border/50 rounded-2xl p-6 flex items-center justify-between shadow-sm animate-in fade-in slide-in-from-bottom-4 duration-300">
-            <div>
-              <p className="font-display font-semibold text-lg text-foreground">
-                {selectedUpgrades.length} upgrade{selectedUpgrades.length > 1 ? "s" : ""} selected
-              </p>
-              <p className="text-sm text-muted-foreground">Ready to see matched contractors and rebates?</p>
-            </div>
-            <Button
-              onClick={() => setLocation("/rebates")}
-              className="rounded-full h-12 px-8 bg-secondary hover:bg-secondary/90 text-secondary-foreground font-medium shadow-lg"
-              data-testid="button-view-rebates"
-            >
-              View Rebates
-            </Button>
+                    Explore Options
+                  </button>
+                </div>
+              );
+            })}
           </div>
-        )}
+
+          <div className="mt-12 bg-primary rounded-2xl p-8 flex items-center gap-8 overflow-hidden relative">
+            <div className="flex-1 space-y-4 z-10">
+              <h2 className="font-display font-bold text-[28px] leading-tight text-primary-foreground">
+                Confused about where to start?
+              </h2>
+              <p className="text-primary-foreground/70 text-sm leading-relaxed max-w-[340px]">
+                Our experts can help you prioritize these upgrades based on your budget and long-term energy goals. Schedule a 15-minute consultation today.
+              </p>
+              <button className="px-6 py-3 rounded-xl bg-secondary text-secondary-foreground text-sm font-semibold hover:bg-secondary/90 transition-colors">
+                Talk to an Advisor
+              </button>
+            </div>
+            <div className="w-[120px] h-[120px] rounded-2xl bg-primary-foreground/10 flex items-center justify-center flex-shrink-0">
+              <LayoutGrid className="h-12 w-12 text-secondary/80" />
+            </div>
+          </div>
+        </main>
+
+        <footer className="w-full px-8 py-5 flex items-center justify-between border-t border-border/40">
+          <span className="text-sm text-muted-foreground">© 2024 Modovate. All rights reserved.</span>
+          <div className="flex items-center gap-6">
+            <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Privacy Policy</a>
+            <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Terms of Service</a>
+            <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Contact Support</a>
+          </div>
+        </footer>
       </div>
-    </Layout>
+    </div>
   );
 }
