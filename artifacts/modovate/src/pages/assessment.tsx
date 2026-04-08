@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from "react";
 import { useLocation } from "wouter";
-import { MapPin, Home, Calendar, ArrowUpRight, Thermometer, DollarSign, Activity, ArrowRight } from "lucide-react";
+import { MapPin, Building2, CalendarDays, ChevronUp, Flag, MonitorDot, Gauge, ArrowRight } from "lucide-react";
 import { useHomeowner } from "@/context/HomeownerContext";
 import { lookupAddressProfile, getEnerGuideRating, getEstimatedAnnualEnergyCost } from "@/lib/energy-calculator";
 import type { HeatingSystem } from "@/lib/energy-calculator";
@@ -43,12 +43,12 @@ export default function Assessment() {
   const roofAreaSqft = Math.round(profile.roofAreaSqm * 10.764);
 
   const propertyCards = [
-    { icon: Home, label: "Property Size", value: profile.estimatedSqft.toLocaleString() + " sq ft", highlight: false },
-    { icon: Calendar, label: "Year Built", value: profile.yearBuilt.toString(), highlight: false },
-    { icon: ArrowUpRight, label: "Estimated Roof Area", value: roofAreaSqft.toLocaleString() + " sq ft", highlight: false },
-    { icon: Thermometer, label: "Climate Zone", value: profile.climateZone, highlight: false },
-    { icon: DollarSign, label: "Annual Energy Cost", value: "$" + annualEnergyCost.toLocaleString(), highlight: false },
-    { icon: Activity, label: "Current Energy Rating", value: performanceLabel, highlight: true },
+    { icon: Building2, label: "Property Size", value: profile.estimatedSqft.toLocaleString() + " sq ft", highlight: false },
+    { icon: CalendarDays, label: "Year Built", value: profile.yearBuilt.toString(), highlight: false },
+    { icon: ChevronUp, label: "Estimated Roof Area", value: roofAreaSqft.toLocaleString() + " sq ft", highlight: false },
+    { icon: Flag, label: "Climate Zone", value: profile.climateZone, highlight: false },
+    { icon: MonitorDot, label: "Annual Energy Cost", value: "$" + annualEnergyCost.toLocaleString(), highlight: false },
+    { icon: Gauge, label: "Current Energy Rating", value: performanceLabel, highlight: true },
   ];
 
   const basePath = import.meta.env.BASE_URL || "/";
