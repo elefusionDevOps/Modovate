@@ -1,0 +1,68 @@
+Section 5: Ontario Rebate Programs (Use These Exactly)
+These are the real, current Ontario and federal rebate programs as of early 2026. Use these
+exact program names, dollar amounts, and URLs in mock-rebate-programs.json and on
+Screen 6. Do not invent program names or amounts.
+Federal Programs
+Canada Greener Homes Grant
+- Administering body: Natural Resources Canada (NRCan)
+- Maximum amount: $5,000 total per household
+- Eligible upgrades: Air-source heat pumps (up to $5,000), insulation (up to $600 per
+zone, up to $5,000 total), windows and doors, solar PV
+- Key condition: Requires a pre- and post-retrofit EnerGuide assessment by an
+NRCan-registered energy advisor. For the POC demo, display the rebate amount and
+note the assessment requirement; do not simulate the assessment process.
+- Application URL:
+https://www.nrcan.gc.ca/energy-efficiency/homes/canada-greener-homes-grant/23230
+Canada Greener Homes Loan
+- Administering body: NRCan
+- Maximum amount: $40,000 interest-free loan, up to 10-year term
+- Eligible upgrades: Same as the Grant
+- Key condition: Must complete a pre-retrofit EnerGuide assessment
+- Note: This is a loan, not a grant. Display separately on Screen 6 to avoid confusion with
+the grant amount.
+- Application URL:
+https://www.nrcan.gc.ca/energy-efficiency/homes/canada-greener-homes-loan/24286
+Ontario / Utility Programs
+Enbridge Home Efficiency Rebate Plus (HER+)
+- Administering body: Enbridge Gas (Ontario)
+- Maximum amount: Up to $10,000 for eligible retrofits
+- Eligible upgrades: Air-source heat pumps (up to $6,500), insulation, air sealing, smart
+thermostats, heat pump water heaters
+- Key condition: Must be an Enbridge Gas customer; pre-retrofit home assessment
+required
+- Stackable with: Canada Greener Homes Grant (programs are designed to be stacked)
+- Application URL: https://www.enbridgegas.com/home-efficiency-rebate
+IESO saveONenergy Programs
+- Administering body: IESO / local electric utility
+- Programs include: Home Assistance Program (low-income focus), Retrofit Program,
+Peak Saver Plus
+- Amounts: Typical residential rebates range from $50 to $500 for appliances and
+thermostats; larger amounts for eligible insulation and HVAC work
+- Key condition: Must be a customer of a participating Ontario electric utility
+- Application URL: https://www.ieso.ca/consumer-partnership/energy-efficiency-programs
+Toronto Hydro Energy Conservation Programs
+- Administering body: Toronto Hydro (Toronto customers only)
+- Programs: peaksaver PLUS (smart thermostat rebate), Home Energy Savings Program
+- Amounts: Smart thermostat rebate up to $75; additional conservation program rebates
+vary
+- Key condition: Toronto Hydro customer
+- Display rule: Show this program only when the entered address is in the City of Toronto.
+For all other Ontario addresses, display the generic IESO programs instead.
+- Application URL: https://www.torontohydro.com/for-home/energy-conservation
+Ontario Renovates Program
+- Administering body: Ontario Ministry of Municipal Affairs and Housing
+- Maximum amount: Forgivable loans up to $25,000 for eligible homeowners
+- Key condition: Income-qualified; priority for Indigenous, Northern, and rural homeowners
+- Display note: Include this program in the summary with an eligibility note. Do not assume
+eligibility for the demo profile; display it as "Check eligibility" rather than "You qualify."
+- Application URL:
+https://www.ontario.ca/page/get-help-with-home-repairs-and-modifications
+Stacking Note for the Demo
+For a typical GTA homeowner replacing a gas furnace with a cold-climate heat pump and
+adding insulation:
+- Canada Greener Homes Grant: up to $5,000
+- HER+ (Enbridge): up to $6,500 for heat pump plus up to $2,000 for insulation
+- IESO/utility programs: up to $500
+- Total stacked rebates: up to $14,000
+This stacked total is what the "Total available rebates" figure on Screens 6 and 8 should reflect
+for a heat pump plus insulation project on a typical demo profile.
