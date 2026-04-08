@@ -1,8 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useLocation } from "wouter";
+import { ArrowLeft, ShieldCheck } from "lucide-react";
 import { useHomeowner } from "@/context/HomeownerContext";
-import { Progress } from "@/components/ui/progress";
-import Layout from "@/components/layout";
 import type { HeatingSystem } from "@/lib/energy-calculator";
 
 interface Question {
@@ -14,24 +13,27 @@ interface Question {
 
 const questions: Question[] = [
   {
+    id: "homeSize",
+    text: "What is your home's approximate size?",
+    multiSelect: false,
+    options: [
+      { label: "Under 1,000 sq ft", value: "small" },
+      { label: "1,000 to 1,500 sq ft", value: "medium" },
+      { label: "1,500 to 2,500 sq ft", value: "large" },
+      { label: "Over 2,500 sq ft", value: "xlarge" },
+      { label: "Not Sure", value: "unknown" },
+    ],
+  },
+  {
     id: "heatingSystem",
     text: "What type of heating system does your home currently use?",
     multiSelect: false,
     options: [
       { label: "Gas Furnace", value: "gas_furnace" },
-      { label: "Oil Furnace", value: "oil_furnace" },
       { label: "Electric Baseboard", value: "electric_baseboard" },
-      { label: "Propane Furnace", value: "propane_furnace" },
-    ],
-  },
-  {
-    id: "homeSize",
-    text: "How large is your home?",
-    multiSelect: false,
-    options: [
-      { label: "Under 1,200 sq ft", value: "small" },
-      { label: "1,200 – 2,000 sq ft", value: "medium" },
-      { label: "Over 2,000 sq ft", value: "large" },
+      { label: "Heat Pump (existing)", value: "heat_pump_existing" },
+      { label: "Oil Furnace", value: "oil_furnace" },
+      { label: "Not Sure", value: "not_sure" },
     ],
   },
   {
@@ -70,13 +72,14 @@ const questions: Question[] = [
   },
 ];
 
+const TOTAL_STEPS = 7;
+
 export default function Intake() {
   const [, setLocation] = useLocation();
   const { setIntakeAnswers, setCurrentScreen } = useHomeowner();
   const [currentQ, setCurrentQ] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string | string[]>>({});
   const [multiSelections, setMultiSelections] = useState<string[]>([]);
-  const [showingQuestion, setShowingQuestion] = useState(true);
   const [showFinalMessage, setShowFinalMessage] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -90,17 +93,13 @@ export default function Intake() {
     }
   }, [currentQ, showFinalMessage]);
 
-  const progress = ((currentQ + (showFinalMessage ? 1 : 0)) / questions.length) * 100;
-
   const handleSingleSelect = (questionId: string, value: string) => {
     const newAnswers = { ...answers, [questionId]: value };
     setAnswers(newAnswers);
-    setShowingQuestion(false);
 
     setTimeout(() => {
       if (currentQ < questions.length - 1) {
         setCurrentQ(currentQ + 1);
-        setShowingQuestion(true);
         setMultiSelections([]);
       } else {
         finalize(newAnswers);
@@ -119,12 +118,10 @@ export default function Intake() {
     const questionId = questions[currentQ].id;
     const newAnswers = { ...answers, [questionId]: multiSelections };
     setAnswers(newAnswers);
-    setShowingQuestion(false);
 
     setTimeout(() => {
       if (currentQ < questions.length - 1) {
         setCurrentQ(currentQ + 1);
-        setShowingQuestion(true);
         setMultiSelections([]);
       } else {
         finalize(newAnswers);
@@ -134,12 +131,24 @@ export default function Intake() {
 
   const finalize = (finalAnswers: Record<string, string | string[]>) => {
     setShowFinalMessage(true);
+
+    const heatingVal = finalAnswers.heatingSystem as string;
+    let heatingSystem: HeatingSystem = "gas_furnace";
+    if (heatingVal === "oil_furnace") heatingSystem = "oil_furnace";
+    else if (heatingVal === "electric_baseboard") heatingSystem = "electric_baseboard";
+    else if (heatingVal === "propane_furnace") heatingSystem = "propane_furnace";
+
+    const sizeVal = finalAnswers.homeSize as string;
+    let homeSize = "medium";
+    if (sizeVal === "small") homeSize = "small";
+    else if (sizeVal === "large" || sizeVal === "xlarge") homeSize = "large";
+
     setIntakeAnswers({
-      heatingSystem: finalAnswers.heatingSystem as HeatingSystem,
-      homeSize: finalAnswers.homeSize as string,
-      utilityTypes: finalAnswers.utilityTypes as string[],
-      annualUtilitySpend: finalAnswers.annualUtilitySpend as string,
-      primaryGoals: finalAnswers.primaryGoals as string[],
+      heatingSystem,
+      homeSize,
+      utilityTypes: (finalAnswers.utilityTypes as string[]) || ["natural_gas", "electricity"],
+      annualUtilitySpend: (finalAnswers.annualUtilitySpend as string) || "2000_3500",
+      primaryGoals: (finalAnswers.primaryGoals as string[]) || ["lower_bills"],
     });
 
     setTimeout(() => {
@@ -147,89 +156,151 @@ export default function Intake() {
     }, 1500);
   };
 
+  const handleBack = () => {
+    if (currentQ > 0) {
+      const prevQ = questions[currentQ - 1];
+      const newAnswers = { ...answers };
+      delete newAnswers[prevQ.id];
+      setAnswers(newAnswers);
+      setCurrentQ(currentQ - 1);
+      setMultiSelections([]);
+    } else {
+      window.history.back();
+    }
+  };
+
   return (
-    <Layout step={2}>
-      <div className="flex-1 flex flex-col">
-        <div className="container mx-auto max-w-2xl px-4 pt-4">
-          <Progress value={progress} className="h-1.5 bg-muted" data-testid="progress-intake" />
-        </div>
+    <div className="min-h-[100dvh] bg-background flex flex-col font-sans">
+      <header className="w-full px-8 py-5 flex items-center justify-between">
+        <span className="text-xs font-medium tracking-widest uppercase text-muted-foreground">
+          Step 2 of {TOTAL_STEPS}
+        </span>
+        <span className="font-display font-bold text-xl tracking-tight text-foreground">Modovate</span>
+      </header>
 
-        <div ref={scrollRef} className="flex-1 overflow-y-auto container mx-auto max-w-2xl px-4 py-8 space-y-6">
-          {questions.slice(0, currentQ + 1).map((q, idx) => {
-            const isActive = idx === currentQ && !showFinalMessage;
-            const answered = answers[q.id];
+      <main className="flex-1 flex flex-col items-center px-6">
+        <div ref={scrollRef} className="w-full max-w-[620px] flex-1 py-6 space-y-6">
+          <button
+            onClick={handleBack}
+            className="flex items-center gap-2 text-sm font-medium text-foreground hover:text-primary transition-colors"
+            data-testid="button-back"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Back
+          </button>
 
-            return (
-              <div key={q.id} className={`space-y-4 ${!isActive ? "opacity-50" : ""}`}>
-                <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <span className="text-primary-foreground font-display font-bold text-sm">M</span>
-                  </div>
-                  <div className="bg-card border border-border/50 rounded-2xl rounded-tl-sm px-5 py-4 shadow-sm max-w-[85%]">
-                    <p className="text-foreground font-medium">{q.text}</p>
-                  </div>
-                </div>
+          <div className="space-y-6">
+            {questions.slice(0, currentQ + 1).map((q, idx) => {
+              const isActive = idx === currentQ && !showFinalMessage;
+              const answered = answers[q.id];
 
-                {isActive && showingQuestion && !answered ? (
-                  <div className="pl-11 flex flex-wrap gap-2 animate-in fade-in slide-in-from-bottom-2 duration-300">
-                    {q.options.map((opt) => (
-                      <button
-                        key={opt.value}
-                        onClick={() =>
-                          q.multiSelect ? handleMultiToggle(opt.value) : handleSingleSelect(q.id, opt.value)
-                        }
-                        className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-200 border ${
-                          q.multiSelect && multiSelections.includes(opt.value)
-                            ? "bg-primary text-primary-foreground border-primary shadow-md"
-                            : "bg-card text-foreground border-border hover:border-primary/50 hover:bg-muted"
-                        }`}
-                        data-testid={`chip-${q.id}-${opt.value}`}
-                      >
-                        {opt.label}
-                      </button>
-                    ))}
-                    {q.multiSelect && (
-                      <button
-                        onClick={handleMultiConfirm}
-                        disabled={multiSelections.length === 0}
-                        className="px-6 py-2.5 rounded-full text-sm font-medium bg-secondary text-secondary-foreground disabled:opacity-40 transition-all hover:bg-secondary/90 shadow-sm"
-                        data-testid={`button-confirm-${q.id}`}
-                      >
-                        Continue
-                      </button>
-                    )}
-                  </div>
-                ) : answered ? (
-                  <div className="pl-11 flex justify-end">
-                    <div className="bg-primary/5 border border-primary/10 rounded-2xl rounded-tr-sm px-5 py-3 text-sm text-foreground/80">
-                      {Array.isArray(answered) ? answered.map((v) => {
-                        const opt = q.options.find((o) => o.value === v);
-                        return opt?.label;
-                      }).join(", ") : q.options.find((o) => o.value === answered)?.label}
+              return (
+                <div key={q.id} className="space-y-5 animate-in fade-in slide-in-from-bottom-3 duration-400">
+                  {!isActive && answered ? (
+                    <div className="space-y-3 opacity-50">
+                      <div className="flex items-start gap-3">
+                        <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center flex-shrink-0 mt-0.5">
+                          <span className="text-primary-foreground font-display font-bold text-sm">M</span>
+                        </div>
+                        <div className="bg-muted/60 rounded-xl px-5 py-3">
+                          <p className="text-sm text-muted-foreground">{q.text}</p>
+                        </div>
+                      </div>
+                      <div className="flex justify-end">
+                        <div className="bg-primary/5 border border-primary/10 rounded-xl px-5 py-2.5 text-sm text-foreground">
+                          {Array.isArray(answered)
+                            ? answered
+                                .map((v) => q.options.find((o) => o.value === v)?.label)
+                                .join(", ")
+                            : q.options.find((o) => o.value === answered)?.label}
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                ) : null}
-              </div>
-            );
-          })}
+                  ) : isActive ? (
+                    <div className="space-y-5">
+                      <div className="flex items-start gap-3">
+                        <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center flex-shrink-0 mt-0.5">
+                          <span className="text-primary-foreground font-display font-bold text-sm">M</span>
+                        </div>
+                        <div className="bg-card border border-border/50 rounded-xl px-5 py-4 shadow-sm">
+                          <p className="text-foreground font-semibold text-[17px] leading-snug">{q.text}</p>
+                        </div>
+                      </div>
 
-          {showFinalMessage && (
-            <div className="flex items-start gap-3 animate-in fade-in slide-in-from-bottom-4 duration-500">
-              <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center flex-shrink-0 mt-0.5">
-                <span className="text-primary-foreground font-display font-bold text-sm">M</span>
-              </div>
-              <div className="bg-card border border-border/50 rounded-2xl rounded-tl-sm px-5 py-4 shadow-sm">
-                <p className="text-foreground font-medium">Great. We're building your home energy report.</p>
-                <div className="mt-3 flex gap-1.5">
-                  <span className="w-2 h-2 rounded-full bg-secondary animate-bounce" style={{ animationDelay: "0ms" }} />
-                  <span className="w-2 h-2 rounded-full bg-secondary animate-bounce" style={{ animationDelay: "150ms" }} />
-                  <span className="w-2 h-2 rounded-full bg-secondary animate-bounce" style={{ animationDelay: "300ms" }} />
+                      <div className="grid grid-cols-2 gap-3 animate-in fade-in slide-in-from-bottom-2 duration-300">
+                        {q.options.map((opt, optIdx) => {
+                          const isLastOdd = q.options.length % 2 !== 0 && optIdx === q.options.length - 1;
+                          const isMultiSelected = q.multiSelect && multiSelections.includes(opt.value);
+
+                          return (
+                            <button
+                              key={opt.value}
+                              onClick={() =>
+                                q.multiSelect
+                                  ? handleMultiToggle(opt.value)
+                                  : handleSingleSelect(q.id, opt.value)
+                              }
+                              className={`text-left px-5 py-4 rounded-xl text-[15px] font-medium transition-all duration-200 border ${
+                                isLastOdd ? "col-span-2" : ""
+                              } ${
+                                isMultiSelected
+                                  ? "bg-primary text-primary-foreground border-primary shadow-md"
+                                  : "bg-card text-foreground border-border/60 hover:border-primary/40 hover:shadow-sm"
+                              }`}
+                              data-testid={`chip-${q.id}-${opt.value}`}
+                            >
+                              {opt.label}
+                            </button>
+                          );
+                        })}
+                        {q.multiSelect && (
+                          <button
+                            onClick={handleMultiConfirm}
+                            disabled={multiSelections.length === 0}
+                            className="col-span-2 mt-1 px-6 py-3.5 rounded-xl text-[15px] font-semibold bg-secondary text-secondary-foreground disabled:opacity-40 transition-all hover:bg-secondary/90 shadow-sm"
+                            data-testid={`button-confirm-${q.id}`}
+                          >
+                            Continue
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  ) : null}
+                </div>
+              );
+            })}
+
+            {showFinalMessage && (
+              <div className="flex items-start gap-3 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <span className="text-primary-foreground font-display font-bold text-sm">M</span>
+                </div>
+                <div className="bg-card border border-border/50 rounded-xl px-5 py-4 shadow-sm">
+                  <p className="text-foreground font-semibold">Building your personalized energy report...</p>
+                  <div className="mt-3 flex gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-secondary animate-bounce" style={{ animationDelay: "0ms" }} />
+                    <span className="w-2 h-2 rounded-full bg-secondary animate-bounce" style={{ animationDelay: "150ms" }} />
+                    <span className="w-2 h-2 rounded-full bg-secondary animate-bounce" style={{ animationDelay: "300ms" }} />
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
+
+          <div className="flex items-center justify-center gap-2 pt-8 pb-4">
+            <ShieldCheck className="h-4 w-4 text-muted-foreground/60" />
+            <span className="text-sm text-muted-foreground/80">Your data is secure and used only for energy analysis.</span>
+          </div>
         </div>
-      </div>
-    </Layout>
+      </main>
+
+      <footer className="w-full px-8 py-5 flex items-center justify-between border-t border-border/40">
+        <span className="text-sm text-muted-foreground">© 2024 Modovate. All rights reserved.</span>
+        <div className="flex items-center gap-6">
+          <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Privacy Policy</a>
+          <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Terms of Use</a>
+        </div>
+      </footer>
+    </div>
   );
 }
