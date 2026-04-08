@@ -1,0 +1,63 @@
+{
+  "profiles": [
+    {
+      "address": "42 Birchmount Road, Scarborough, ON M1N 3J7",
+      "estimatedSqft": 1100,
+      "yearBuilt": 1962,
+      "footprintSqm": 95,
+      "roofAreaSqm": 85,
+      "climateZone": "Zone 5",
+      "hasGarage": true,
+      "heatingSystemAssumption": "gas_furnace"
+    },
+    {
+      "address": "15 Creditview Road, Mississauga, ON L5C 2A2",
+      "estimatedSqft": 1800,
+      "yearBuilt": 1994,
+      "footprintSqm": 155,
+      "roofAreaSqm": 140,
+      "climateZone": "Zone 5",
+      "hasGarage": true,
+      "heatingSystemAssumption": "gas_furnace"
+    },
+    {
+      "address": "78 Sheppard Avenue West, North York, ON M2N 1M5",
+      "estimatedSqft": 1500,
+      "yearBuilt": 2005,
+      "footprintSqm": 130,
+      "roofAreaSqm": 120,
+      "climateZone": "Zone 5",
+      "hasGarage": false,
+      "heatingSystemAssumption": "gas_furnace"
+    },
+    {
+      "address": "201 Danforth Avenue, Toronto, ON M4K 1N2",
+      "estimatedSqft": 1350,
+      "yearBuilt": 1928,
+      "footprintSqm": 110,
+      "roofAreaSqm": 100,
+      "climateZone": "Zone 5",
+      "hasGarage": false,
+      "heatingSystemAssumption": "gas_furnace"
+    },
+    {
+      "address": "55 Elm Street, Hamilton, ON L8P 4N4",
+      "estimatedSqft": 2200,
+      "yearBuilt": 1975,
+      "footprintSqm": 180,
+      "roofAreaSqm": 165,
+      "climateZone": "Zone 6",
+      "hasGarage": true,
+      "heatingSystemAssumption": "oil_furnace"
+    }
+  ],
+  "defaultProfile": {
+    "estimatedSqft": 1400,
+    "yearBuilt": 1987,
+    "footprintSqm": 125,
+    "roofAreaSqm": 110,
+    "climateZone": "Zone 5",
+    "hasGarage": true,
+    "heatingSystemAssumption": "gas_furnace"
+  }
+}

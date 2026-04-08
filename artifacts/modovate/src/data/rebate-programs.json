@@ -1,0 +1,119 @@
+{
+  "programs": [
+    {
+      "id": "greener-homes",
+      "name": "Canada Greener Homes Grant",
+      "administrator": "Natural Resources Canada (NRCan)",
+      "level": "federal",
+      "maxAmount": 5000,
+      "eligibleUpgrades": ["heat_pump", "insulation", "windows", "solar_pv"],
+      "perUpgradeLimits": {
+        "heat_pump": 5000,
+        "insulation": 5000,
+        "windows": 5000,
+        "solar_pv": 5000
+      },
+      "applicationUrl": "https://www.nrcan.gc.ca/energy-efficiency/homes/canada-greener-homes-grant/23230",
+      "notes": "Requires a pre- and post-retrofit EnerGuide assessment by an NRCan-registered energy advisor.",
+      "active": true,
+      "province": "all",
+      "utilityRestriction": null,
+      "isLoan": false
+    },
+    {
+      "id": "greener-homes-loan",
+      "name": "Canada Greener Homes Loan",
+      "administrator": "Natural Resources Canada (NRCan)",
+      "level": "federal",
+      "maxAmount": 40000,
+      "eligibleUpgrades": ["heat_pump", "insulation", "windows", "solar_pv"],
+      "perUpgradeLimits": {
+        "heat_pump": 40000,
+        "insulation": 40000,
+        "windows": 40000,
+        "solar_pv": 40000
+      },
+      "applicationUrl": "https://www.nrcan.gc.ca/energy-efficiency/homes/canada-greener-homes-loan/24286",
+      "notes": "Interest-free loan with up to 10-year repayment term. Must complete a pre-retrofit EnerGuide assessment.",
+      "active": true,
+      "province": "all",
+      "utilityRestriction": null,
+      "isLoan": true
+    },
+    {
+      "id": "her-plus",
+      "name": "Enbridge Home Efficiency Rebate Plus (HER+)",
+      "administrator": "Enbridge Gas (Ontario)",
+      "level": "utility",
+      "maxAmount": 10000,
+      "eligibleUpgrades": ["heat_pump", "insulation", "windows"],
+      "perUpgradeLimits": {
+        "heat_pump": 6500,
+        "insulation": 2000,
+        "windows": 1500
+      },
+      "applicationUrl": "https://www.enbridgegas.com/home-efficiency-rebate",
+      "notes": "Must be an Enbridge Gas customer. Pre-retrofit home assessment required. Stackable with Canada Greener Homes Grant.",
+      "active": true,
+      "province": "ON",
+      "utilityRestriction": "enbridge_gas_customer",
+      "isLoan": false
+    },
+    {
+      "id": "ieso-saveonenergy",
+      "name": "IESO saveONenergy Programs",
+      "administrator": "IESO / Local Electric Utility",
+      "level": "provincial",
+      "maxAmount": 500,
+      "eligibleUpgrades": ["heat_pump", "insulation", "electrical_panel"],
+      "perUpgradeLimits": {
+        "heat_pump": 500,
+        "insulation": 300,
+        "electrical_panel": 200
+      },
+      "applicationUrl": "https://www.ieso.ca/consumer-partnership/energy-efficiency-programs",
+      "notes": "Must be a customer of a participating Ontario electric utility. Includes Home Assistance Program and Retrofit Program.",
+      "active": true,
+      "province": "ON",
+      "utilityRestriction": null,
+      "isLoan": false
+    },
+    {
+      "id": "toronto-hydro",
+      "name": "Toronto Hydro Energy Conservation Programs",
+      "administrator": "Toronto Hydro",
+      "level": "utility",
+      "maxAmount": 75,
+      "eligibleUpgrades": ["heat_pump"],
+      "perUpgradeLimits": {
+        "heat_pump": 75
+      },
+      "applicationUrl": "https://www.torontohydro.com/for-home/energy-conservation",
+      "notes": "Toronto Hydro customers only. Includes peaksaver PLUS smart thermostat rebate and Home Energy Savings Program.",
+      "active": true,
+      "province": "ON",
+      "utilityRestriction": "toronto_hydro_customer",
+      "isLoan": false
+    },
+    {
+      "id": "ontario-renovates",
+      "name": "Ontario Renovates Program",
+      "administrator": "Ontario Ministry of Municipal Affairs and Housing",
+      "level": "provincial",
+      "maxAmount": 25000,
+      "eligibleUpgrades": ["heat_pump", "insulation", "windows", "electrical_panel"],
+      "perUpgradeLimits": {
+        "heat_pump": 25000,
+        "insulation": 25000,
+        "windows": 25000,
+        "electrical_panel": 25000
+      },
+      "applicationUrl": "https://www.ontario.ca/page/get-help-with-home-repairs-and-modifications",
+      "notes": "Forgivable loans for eligible homeowners. Income-qualified with priority for Indigenous, Northern, and rural homeowners. Check eligibility.",
+      "active": true,
+      "province": "ON",
+      "utilityRestriction": null,
+      "isLoan": true
+    }
+  ]
+}

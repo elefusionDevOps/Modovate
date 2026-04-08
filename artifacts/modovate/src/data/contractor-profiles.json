@@ -1,0 +1,52 @@
+{
+  "contractors": [
+    {
+      "id": "greenhome-hvac",
+      "name": "GreenHome HVAC Solutions",
+      "city": "Toronto",
+      "serviceArea": "Greater Toronto Area",
+      "serviceAreaCities": ["Toronto", "Mississauga", "Brampton", "Vaughan", "Markham", "Richmond Hill", "Oakville", "Burlington"],
+      "specialties": ["heat_pump", "electrical_panel", "insulation"],
+      "rating": 4.9,
+      "reviewCount": 312,
+      "yearsInBusiness": 14,
+      "projectsCompleted": 1240,
+      "availability": "Available within 2 weeks",
+      "certifications": ["HRAI Certified", "Enbridge Registered Contractor", "NRCan Registered"],
+      "topMatch": true,
+      "description": "GreenHome HVAC Solutions is the GTA's leading energy retrofit contractor, specializing in cold climate heat pump installations and whole-home energy upgrades. With over 1,200 projects completed, they bring deep expertise in maximizing rebate eligibility for every project."
+    },
+    {
+      "id": "ecorenovate-on",
+      "name": "EcoRenovate Ontario",
+      "city": "Toronto",
+      "serviceArea": "GTA + Hamilton",
+      "serviceAreaCities": ["Toronto", "Mississauga", "Hamilton", "Burlington", "Oakville", "Milton", "Brampton"],
+      "specialties": ["heat_pump", "insulation", "solar_pv", "windows"],
+      "rating": 4.8,
+      "reviewCount": 187,
+      "yearsInBusiness": 8,
+      "projectsCompleted": 620,
+      "availability": "Available within 3 weeks",
+      "certifications": ["HRAI Certified", "NRCan Registered", "SunPower Elite Dealer"],
+      "topMatch": false,
+      "description": "EcoRenovate Ontario offers comprehensive home energy solutions from insulation to solar PV. Their team of certified technicians handles every aspect of the retrofit process, from energy assessment to final inspection."
+    },
+    {
+      "id": "volta-energy",
+      "name": "Volta Energy Systems",
+      "city": "Toronto East",
+      "serviceArea": "Toronto East + Scarborough",
+      "serviceAreaCities": ["Toronto", "Scarborough", "Pickering", "Ajax", "Whitby", "Oshawa"],
+      "specialties": ["solar_pv", "ev_charger", "battery_storage", "electrical_panel"],
+      "rating": 4.7,
+      "reviewCount": 94,
+      "yearsInBusiness": 5,
+      "projectsCompleted": 280,
+      "availability": "Available within 1 week",
+      "certifications": ["ESA Licensed Electrical Contractor", "Tesla Powerwall Certified", "SolarEdge Installer"],
+      "topMatch": false,
+      "description": "Volta Energy Systems focuses on the electrification side of home energy upgrades. They are the go-to contractor for solar PV, battery storage, and EV charger installations in Toronto's east end."
+    }
+  ]
+}

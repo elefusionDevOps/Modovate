@@ -1,0 +1,317 @@
+{
+  "heat_pump": {
+    "label": "Cold Climate Heat Pump",
+    "description": "Replace your existing heating system with an energy-efficient cold climate heat pump that provides both heating and cooling.",
+    "products": [
+      {
+        "id": "mitsubishi-zuba",
+        "name": "Mitsubishi Zuba-Central H2i",
+        "brand": "Mitsubishi Electric",
+        "specs": { "cop": 3.5, "btu": 36000, "hspf2": 10.5, "minOperatingTemp": -30 },
+        "installedCostMin": 18500,
+        "installedCostMax": 21000,
+        "rebateEligible": true,
+        "rebatePrograms": ["greener-homes", "her-plus"],
+        "bestMatch": true,
+        "rating": 4.8,
+        "highlights": ["Rated to -30\u00b0C", "Qualifies for Greener Homes Grant", "Most popular in GTA"]
+      },
+      {
+        "id": "lennox-xp25h",
+        "name": "Lennox XP25-H",
+        "brand": "Lennox",
+        "specs": { "cop": 3.2, "btu": 42000, "hspf2": 9.8, "minOperatingTemp": -25 },
+        "installedCostMin": 17200,
+        "installedCostMax": 19500,
+        "rebateEligible": true,
+        "rebatePrograms": ["greener-homes", "her-plus"],
+        "bestMatch": false,
+        "rating": 4.6,
+        "highlights": ["Higher BTU capacity", "Lower upfront cost", "Wide dealer network"]
+      },
+      {
+        "id": "bosch-ids-ultra",
+        "name": "Bosch IDS Ultra Quiet",
+        "brand": "Bosch",
+        "specs": { "cop": 3.6, "btu": 30000, "hspf2": 11.0, "minOperatingTemp": -30 },
+        "installedCostMin": 20500,
+        "installedCostMax": 23000,
+        "rebateEligible": true,
+        "rebatePrograms": ["greener-homes", "her-plus"],
+        "bestMatch": false,
+        "rating": 4.7,
+        "highlights": ["Highest efficiency rating", "Ultra-quiet operation", "10-year parts warranty"]
+      }
+    ]
+  },
+  "insulation": {
+    "label": "Insulation Upgrade",
+    "description": "Improve your home's thermal envelope with modern insulation to reduce heat loss and lower energy bills.",
+    "products": [
+      {
+        "id": "demilec-spray-foam",
+        "name": "Closed-Cell Spray Foam",
+        "brand": "Demilec",
+        "specs": { "rValue": 6.5, "coverageSqFt": 1000, "moistureBarrier": true },
+        "installedCostMin": 3500,
+        "installedCostMax": 6000,
+        "rebateEligible": true,
+        "rebatePrograms": ["greener-homes", "her-plus"],
+        "bestMatch": true,
+        "rating": 4.7,
+        "highlights": ["Highest R-value per inch", "Acts as air and moisture barrier", "25+ year lifespan"]
+      },
+      {
+        "id": "blown-cellulose",
+        "name": "Blown-In Cellulose",
+        "brand": "GreenFiber",
+        "specs": { "rValue": 3.7, "coverageSqFt": 1200, "moistureBarrier": false },
+        "installedCostMin": 1800,
+        "installedCostMax": 3500,
+        "rebateEligible": true,
+        "rebatePrograms": ["greener-homes"],
+        "bestMatch": false,
+        "rating": 4.4,
+        "highlights": ["Most affordable option", "Made from recycled materials", "Quick installation"]
+      },
+      {
+        "id": "rockwool-comfortboard",
+        "name": "Rigid Foam Board",
+        "brand": "Rockwool ComfortBoard",
+        "specs": { "rValue": 4.3, "coverageSqFt": 1000, "moistureBarrier": true },
+        "installedCostMin": 2800,
+        "installedCostMax": 5000,
+        "rebateEligible": true,
+        "rebatePrograms": ["greener-homes"],
+        "bestMatch": false,
+        "rating": 4.5,
+        "highlights": ["Fire resistant", "Sound dampening", "Moisture resistant"]
+      }
+    ]
+  },
+  "electrical_panel": {
+    "label": "Electrical Panel Upgrade",
+    "description": "Upgrade to a 200A panel to support modern electrical loads including heat pumps, EV chargers, and solar PV systems.",
+    "products": [
+      {
+        "id": "siemens-200a",
+        "name": "Siemens 200A Panel",
+        "brand": "Siemens",
+        "specs": { "amperage": 200, "circuits": 40, "surgProtection": true },
+        "installedCostMin": 2500,
+        "installedCostMax": 4000,
+        "rebateEligible": false,
+        "rebatePrograms": [],
+        "bestMatch": true,
+        "rating": 4.6,
+        "highlights": ["Built-in surge protection", "Smart panel ready", "Industry standard"]
+      },
+      {
+        "id": "square-d-qo-200a",
+        "name": "Square D QO 200A Panel",
+        "brand": "Square D",
+        "specs": { "amperage": 200, "circuits": 42, "surgProtection": true },
+        "installedCostMin": 2800,
+        "installedCostMax": 4200,
+        "rebateEligible": false,
+        "rebatePrograms": [],
+        "bestMatch": false,
+        "rating": 4.7,
+        "highlights": ["Premium build quality", "Visi-Trip indicator", "Contractor preferred"]
+      },
+      {
+        "id": "eaton-br-200a",
+        "name": "Eaton BR 200A Panel",
+        "brand": "Eaton",
+        "specs": { "amperage": 200, "circuits": 40, "surgProtection": false },
+        "installedCostMin": 2200,
+        "installedCostMax": 3500,
+        "rebateEligible": false,
+        "rebatePrograms": [],
+        "bestMatch": false,
+        "rating": 4.4,
+        "highlights": ["Budget-friendly option", "Easy installation", "Wide availability"]
+      }
+    ]
+  },
+  "solar_pv": {
+    "label": "Solar PV System",
+    "description": "Generate clean electricity from your roof with a solar photovoltaic system, reducing grid dependence and electricity costs.",
+    "products": [
+      {
+        "id": "lg-neon-r",
+        "name": "LG NeON R 400W",
+        "brand": "LG",
+        "specs": { "wattage": 400, "efficiency": 22.0, "warranty": 25 },
+        "installedCostMin": 15000,
+        "installedCostMax": 22000,
+        "rebateEligible": true,
+        "rebatePrograms": ["greener-homes"],
+        "bestMatch": true,
+        "rating": 4.8,
+        "highlights": ["Industry-leading efficiency", "25-year product warranty", "All-black aesthetic"]
+      },
+      {
+        "id": "canadian-solar-hiku6",
+        "name": "Canadian Solar HiKu6 420W",
+        "brand": "Canadian Solar",
+        "specs": { "wattage": 420, "efficiency": 21.3, "warranty": 25 },
+        "installedCostMin": 12000,
+        "installedCostMax": 18000,
+        "rebateEligible": true,
+        "rebatePrograms": ["greener-homes"],
+        "bestMatch": false,
+        "rating": 4.5,
+        "highlights": ["Canadian manufacturer", "Excellent value", "Higher wattage per panel"]
+      },
+      {
+        "id": "sunpower-maxeon6",
+        "name": "SunPower Maxeon 6",
+        "brand": "SunPower",
+        "specs": { "wattage": 420, "efficiency": 22.8, "warranty": 40 },
+        "installedCostMin": 18000,
+        "installedCostMax": 25000,
+        "rebateEligible": true,
+        "rebatePrograms": ["greener-homes"],
+        "bestMatch": false,
+        "rating": 4.9,
+        "highlights": ["Highest efficiency available", "40-year warranty", "Premium performance"]
+      }
+    ]
+  },
+  "ev_charger": {
+    "label": "EV Charger Installation",
+    "description": "Install a Level 2 home EV charger for convenient overnight charging of your electric vehicle.",
+    "products": [
+      {
+        "id": "flo-g5",
+        "name": "Flo G5 (32A)",
+        "brand": "Flo",
+        "specs": { "amperage": 32, "power": 7.2, "connector": "J1772", "wifi": true },
+        "installedCostMin": 1500,
+        "installedCostMax": 2500,
+        "rebateEligible": false,
+        "rebatePrograms": [],
+        "bestMatch": true,
+        "rating": 4.6,
+        "highlights": ["Canadian-designed", "Built-in WiFi", "ENERGY STAR certified"]
+      },
+      {
+        "id": "chargepoint-home-flex",
+        "name": "ChargePoint Home Flex",
+        "brand": "ChargePoint",
+        "specs": { "amperage": 50, "power": 12.0, "connector": "J1772", "wifi": true },
+        "installedCostMin": 1800,
+        "installedCostMax": 3000,
+        "rebateEligible": false,
+        "rebatePrograms": [],
+        "bestMatch": false,
+        "rating": 4.7,
+        "highlights": ["Fastest home charging", "App-controlled", "Adjustable amperage"]
+      },
+      {
+        "id": "grizzle-classic",
+        "name": "Grizzl-E Classic",
+        "brand": "Grizzl-E",
+        "specs": { "amperage": 40, "power": 9.6, "connector": "J1772", "wifi": false },
+        "installedCostMin": 1200,
+        "installedCostMax": 2000,
+        "rebateEligible": false,
+        "rebatePrograms": [],
+        "bestMatch": false,
+        "rating": 4.5,
+        "highlights": ["Best value option", "Canadian-made", "Weather resistant"]
+      }
+    ]
+  },
+  "battery_storage": {
+    "label": "Battery Storage",
+    "description": "Store solar energy or grid power for backup and peak-shaving to maximize energy independence.",
+    "products": [
+      {
+        "id": "tesla-powerwall3",
+        "name": "Tesla Powerwall 3",
+        "brand": "Tesla",
+        "specs": { "capacityKwh": 13.5, "powerKw": 11.5, "roundTripEfficiency": 97.5 },
+        "installedCostMin": 12000,
+        "installedCostMax": 16000,
+        "rebateEligible": true,
+        "rebatePrograms": ["greener-homes"],
+        "bestMatch": true,
+        "rating": 4.7,
+        "highlights": ["Integrated solar inverter", "Storm Watch feature", "Most recognized brand"]
+      },
+      {
+        "id": "lg-resu16h",
+        "name": "LG RESU16H Prime",
+        "brand": "LG",
+        "specs": { "capacityKwh": 16.0, "powerKw": 7.0, "roundTripEfficiency": 95.0 },
+        "installedCostMin": 11000,
+        "installedCostMax": 14500,
+        "rebateEligible": true,
+        "rebatePrograms": ["greener-homes"],
+        "bestMatch": false,
+        "rating": 4.5,
+        "highlights": ["Highest capacity", "Compact design", "10-year warranty"]
+      },
+      {
+        "id": "sonnen-eco10",
+        "name": "Sonnen Eco 10",
+        "brand": "Sonnen",
+        "specs": { "capacityKwh": 10.0, "powerKw": 8.0, "roundTripEfficiency": 96.0 },
+        "installedCostMin": 13000,
+        "installedCostMax": 17000,
+        "rebateEligible": true,
+        "rebatePrograms": ["greener-homes"],
+        "bestMatch": false,
+        "rating": 4.6,
+        "highlights": ["German engineering", "Smart energy management", "15,000 cycle lifespan"]
+      }
+    ]
+  },
+  "windows": {
+    "label": "Window Replacement",
+    "description": "Replace drafty single or double-pane windows with high-performance triple-pane windows to reduce heat loss.",
+    "products": [
+      {
+        "id": "pella-350-triple",
+        "name": "Pella 350 Series Triple-Pane",
+        "brand": "Pella",
+        "specs": { "uFactor": 0.18, "panes": 3, "gassFill": "Argon" },
+        "installedCostMin": 8000,
+        "installedCostMax": 15000,
+        "rebateEligible": true,
+        "rebatePrograms": ["greener-homes"],
+        "bestMatch": true,
+        "rating": 4.7,
+        "highlights": ["Triple-pane insulation", "ENERGY STAR Most Efficient", "Low maintenance"]
+      },
+      {
+        "id": "jeldwen-premium-vinyl",
+        "name": "JELD-WEN Premium Vinyl",
+        "brand": "JELD-WEN",
+        "specs": { "uFactor": 0.22, "panes": 3, "gassFill": "Argon" },
+        "installedCostMin": 6000,
+        "installedCostMax": 12000,
+        "rebateEligible": true,
+        "rebatePrograms": ["greener-homes"],
+        "bestMatch": false,
+        "rating": 4.4,
+        "highlights": ["Great value", "Vinyl frame durability", "Custom sizes available"]
+      },
+      {
+        "id": "marvin-essential",
+        "name": "Marvin Essential Double-Hung",
+        "brand": "Marvin",
+        "specs": { "uFactor": 0.20, "panes": 3, "gassFill": "Krypton" },
+        "installedCostMin": 10000,
+        "installedCostMax": 18000,
+        "rebateEligible": true,
+        "rebatePrograms": ["greener-homes"],
+        "bestMatch": false,
+        "rating": 4.8,
+        "highlights": ["Premium fiberglass frame", "Krypton gas fill", "Exceptional aesthetics"]
+      }
+    ]
+  }
+}
