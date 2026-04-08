@@ -69,7 +69,7 @@ export default function Recommendations() {
 
   return (
     <div className="min-h-[100dvh] bg-background flex font-sans">
-      <aside className="w-[200px] flex-shrink-0 border-r border-border/30 flex flex-col py-6 px-4 sticky top-0 h-screen">
+      <aside className="hidden md:flex w-[200px] flex-shrink-0 border-r border-border/30 flex-col py-6 px-4 sticky top-0 h-screen">
         <div className="mb-10">
           <span className="font-display font-bold text-xl tracking-tight text-foreground">Modovate</span>
           <p className="text-[10px] tracking-[0.15em] uppercase text-muted-foreground/60 mt-0.5">Architectural Advisor</p>
@@ -109,13 +109,23 @@ export default function Recommendations() {
       </aside>
 
       <div className="flex-1 flex flex-col">
-        <header className="w-full px-8 py-5 flex items-center justify-end">
+        <header className="w-full px-4 md:px-8 py-4 md:py-5 flex items-center justify-between md:justify-end">
+          <div className="flex items-center gap-3 md:hidden">
+            <button
+              onClick={() => setLocation("/assessment")}
+              className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
+              <ChevronLeft className="h-4 w-4" />
+              Back
+            </button>
+            <span className="font-display font-bold text-lg tracking-tight text-foreground">Modovate</span>
+          </div>
           <span className="text-sm font-medium text-muted-foreground">Step 3 of 8</span>
         </header>
 
-        <main className="flex-1 px-8 pb-12 max-w-[880px]">
+        <main className="flex-1 px-4 md:px-8 pb-12 max-w-[880px]">
           <div className="mb-8">
-            <h1 className="font-display font-bold text-[32px] leading-tight text-foreground tracking-tight">
+            <h1 className="font-display font-bold text-[26px] md:text-[32px] leading-tight text-foreground tracking-tight">
               Your Personalized Upgrade Plan
             </h1>
             <p className="text-muted-foreground mt-2 text-[15px] leading-relaxed max-w-[560px]">
@@ -123,7 +133,7 @@ export default function Recommendations() {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {recommendations.map((rec) => {
               const Icon = categoryIcons[rec.category] || Zap;
               const isRecommended = rec.priority === "high" || rec.priority === "medium";
@@ -135,7 +145,7 @@ export default function Recommendations() {
               return (
                 <div
                   key={rec.category}
-                  className={`bg-card border border-border/50 rounded-2xl p-6 flex flex-col ${isLastOddItem ? "col-span-2 max-w-[calc(50%-10px)]" : ""}`}
+                  className={`bg-card border border-border/50 rounded-2xl p-6 flex flex-col ${isLastOddItem ? "md:col-span-2 md:max-w-[calc(50%-10px)]" : ""}`}
                   data-testid={`card-recommendation-${rec.category}`}
                 >
                   <div className="flex items-start justify-between mb-4">
@@ -192,7 +202,7 @@ export default function Recommendations() {
             })}
           </div>
 
-          <div className="mt-12 bg-primary rounded-2xl p-8 flex items-center gap-8 overflow-hidden relative">
+          <div className="mt-12 bg-primary rounded-2xl p-6 md:p-8 flex flex-col md:flex-row items-center gap-6 md:gap-8 overflow-hidden relative">
             <div className="flex-1 space-y-4 z-10">
               <h2 className="font-display font-bold text-[28px] leading-tight text-primary-foreground">
                 Confused about where to start?
@@ -204,18 +214,26 @@ export default function Recommendations() {
                 Talk to an Advisor
               </button>
             </div>
-            <div className="w-[120px] h-[120px] rounded-2xl bg-primary-foreground/10 flex items-center justify-center flex-shrink-0">
+            <div className="w-[100px] h-[100px] md:w-[120px] md:h-[120px] rounded-2xl bg-primary-foreground/10 flex items-center justify-center flex-shrink-0">
               <LayoutGrid className="h-12 w-12 text-secondary/80" />
             </div>
           </div>
         </main>
 
-        <footer className="w-full px-8 py-5 flex items-center justify-between border-t border-border/40">
-          <span className="text-sm text-muted-foreground">© 2024 Modovate. All rights reserved.</span>
-          <div className="flex items-center gap-6">
-            <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Privacy Policy</a>
-            <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Terms of Service</a>
-            <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Contact Support</a>
+        <div className="md:hidden fixed bottom-0 left-0 right-0 bg-background border-t border-border/40 px-4 py-3 z-20">
+          <button
+            onClick={() => setLocation("/rebates")}
+            className="w-full py-3 rounded-xl bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-colors"
+          >
+            Review Plan
+          </button>
+        </div>
+
+        <footer className="w-full px-4 md:px-8 py-5 pb-20 md:pb-5 flex flex-col md:flex-row items-center justify-between gap-3 border-t border-border/40">
+          <span className="text-xs md:text-sm text-muted-foreground">© 2024 Modovate. All rights reserved.</span>
+          <div className="flex items-center gap-4 md:gap-6">
+            <a href="#" className="text-xs md:text-sm text-muted-foreground hover:text-foreground transition-colors">Privacy Policy</a>
+            <a href="#" className="text-xs md:text-sm text-muted-foreground hover:text-foreground transition-colors">Terms of Service</a>
           </div>
         </footer>
       </div>

@@ -201,8 +201,8 @@ export default function Summary() {
 
   return (
     <div className="min-h-[100dvh] bg-background flex flex-col font-sans">
-      <header className="w-full px-8 py-5 flex items-center justify-between">
-        <div className="flex items-center gap-4">
+      <header className="w-full px-4 md:px-8 py-5 flex items-center justify-between">
+        <div className="flex items-center gap-3 md:gap-4">
           <button
             onClick={() => setLocation("/contractors")}
             className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors"
@@ -213,14 +213,14 @@ export default function Summary() {
           </button>
           <span className="font-display font-bold text-xl tracking-tight text-foreground">Modovate</span>
         </div>
-        <span className="text-[10px] font-bold tracking-[0.15em] uppercase text-muted-foreground">
+        <span className="hidden sm:block text-[10px] font-bold tracking-[0.15em] uppercase text-muted-foreground">
           Your Complete Energy Upgrade Plan
         </span>
       </header>
 
-      <main className="flex-1 px-8 pb-16 max-w-[1000px] mx-auto w-full">
+      <main className="flex-1 px-4 md:px-8 pb-16 max-w-[1000px] mx-auto w-full">
         <div className="mb-8">
-          <h1 className="font-display font-bold text-[34px] leading-tight text-foreground tracking-tight mb-2">
+          <h1 className="font-display font-bold text-[26px] md:text-[34px] leading-tight text-foreground tracking-tight mb-2">
             Your Modovate Energy Upgrade Plan
           </h1>
           <p className="text-muted-foreground text-[15px] leading-relaxed max-w-[540px]">
@@ -228,12 +228,12 @@ export default function Summary() {
           </p>
         </div>
 
-        <div className="grid grid-cols-3 gap-5 mb-10">
-          <div className="bg-card border border-border/50 rounded-2xl p-6" data-testid="card-total-cost">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-5 mb-10">
+          <div className="bg-card border border-border/50 rounded-2xl p-5 md:p-6" data-testid="card-total-cost">
             <p className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground/70 mb-2">
               Total Project Cost
             </p>
-            <p className="font-display font-bold text-[32px] text-foreground leading-none mb-2">
+            <p className="font-display font-bold text-[28px] md:text-[32px] text-foreground leading-none mb-2">
               ${grossTotal.toLocaleString()}
             </p>
             <p className="text-xs text-muted-foreground leading-relaxed">
@@ -241,11 +241,11 @@ export default function Summary() {
             </p>
           </div>
 
-          <div className="bg-primary rounded-2xl p-6" data-testid="card-net-cost">
+          <div className="bg-primary rounded-2xl p-5 md:p-6" data-testid="card-net-cost">
             <p className="text-[10px] font-bold tracking-[0.12em] uppercase text-primary-foreground/70 mb-2">
               After Rebates
             </p>
-            <p className="font-display font-bold text-[32px] text-primary-foreground leading-none mb-2">
+            <p className="font-display font-bold text-[28px] md:text-[32px] text-primary-foreground leading-none mb-2">
               ${netCost.toLocaleString()}
             </p>
             <p className="text-xs text-primary-foreground/70 leading-relaxed">
@@ -253,11 +253,11 @@ export default function Summary() {
             </p>
           </div>
 
-          <div className="bg-card border border-border/50 rounded-2xl p-6" data-testid="card-annual-savings">
+          <div className="bg-card border border-border/50 rounded-2xl p-5 md:p-6" data-testid="card-annual-savings">
             <p className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground/70 mb-2">
               Estimated Annual Savings
             </p>
-            <p className="font-display font-bold text-[32px] text-secondary leading-none mb-2">
+            <p className="font-display font-bold text-[28px] md:text-[32px] text-secondary leading-none mb-2">
               ${annualSavings.toLocaleString()}
             </p>
             <p className="text-xs text-muted-foreground leading-relaxed">
@@ -266,8 +266,8 @@ export default function Summary() {
           </div>
         </div>
 
-        <div className="grid grid-cols-5 gap-6 mb-12">
-          <div className="col-span-3 space-y-6">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 mb-12">
+          <div className="lg:col-span-3 space-y-6">
             <div>
               <h2 className="font-display font-bold text-[22px] text-foreground tracking-tight mb-10">
                 Investment Payback Timeline
@@ -365,7 +365,7 @@ export default function Summary() {
             </div>
           </div>
 
-          <div className="col-span-2 space-y-6">
+          <div className="lg:col-span-2 space-y-6">
             <div className="bg-[#2d4a2e] rounded-2xl p-6" data-testid="card-co2-reduction">
               <p className="text-[10px] font-bold tracking-[0.12em] uppercase text-white/60 mb-3">
                 Environmental Impact
@@ -425,8 +425,8 @@ export default function Summary() {
           </div>
         </div>
 
-        <div className="grid grid-cols-3 gap-5">
-          <div className="bg-card border border-border/50 rounded-2xl p-6 flex flex-col items-center text-center">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-5">
+          <div className="bg-card border border-border/50 rounded-2xl p-5 md:p-6 flex flex-col items-center text-center">
             <MessageSquareMore className="h-7 w-7 text-muted-foreground mb-3" />
             <h3 className="font-display font-bold text-base text-foreground mb-4">Get Contractor Quotes</h3>
             <button
@@ -437,7 +437,7 @@ export default function Summary() {
               View Contractors
             </button>
           </div>
-          <div className="bg-card border border-border/50 rounded-2xl p-6 flex flex-col items-center text-center">
+          <div className="bg-card border border-border/50 rounded-2xl p-5 md:p-6 flex flex-col items-center text-center">
             <FileText className="h-7 w-7 text-muted-foreground mb-3" />
             <h3 className="font-display font-bold text-base text-foreground mb-4">Apply for Rebates</h3>
             <button
@@ -448,7 +448,7 @@ export default function Summary() {
               View Rebates
             </button>
           </div>
-          <div className="bg-card border border-border/50 rounded-2xl p-6 flex flex-col items-center text-center">
+          <div className="bg-card border border-border/50 rounded-2xl p-5 md:p-6 flex flex-col items-center text-center">
             <FileDown className="h-7 w-7 text-muted-foreground mb-3" />
             <h3 className="font-display font-bold text-base text-foreground mb-4">Download Your Report</h3>
             <button
@@ -462,12 +462,12 @@ export default function Summary() {
         </div>
       </main>
 
-      <footer className="w-full py-8 flex flex-col items-center gap-3 border-t border-border/40">
+      <footer className="w-full px-4 md:px-0 py-8 flex flex-col items-center gap-3 border-t border-border/40">
         <span className="font-display font-bold text-xl text-foreground">Modovate</span>
-        <div className="flex items-center gap-6">
-          <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Privacy Policy</a>
-          <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Terms of Service</a>
-          <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Support</a>
+        <div className="flex items-center gap-4 md:gap-6">
+          <a href="#" className="text-xs md:text-sm text-muted-foreground hover:text-foreground transition-colors">Privacy Policy</a>
+          <a href="#" className="text-xs md:text-sm text-muted-foreground hover:text-foreground transition-colors">Terms of Service</a>
+          <a href="#" className="text-xs md:text-sm text-muted-foreground hover:text-foreground transition-colors">Support</a>
         </div>
         <span className="text-xs text-muted-foreground">&copy; 2024 Modovate Editorial Intelligence</span>
       </footer>

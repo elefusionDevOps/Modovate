@@ -117,23 +117,23 @@ export default function Equipment() {
 
   return (
     <div className="min-h-[100dvh] bg-background flex flex-col font-sans">
-      <header className="w-full px-8 py-4 flex items-center justify-between bg-background border-b border-border/30">
+      <header className="w-full px-4 md:px-8 py-4 flex items-center justify-between bg-background border-b border-border/30">
         <span className="font-display font-bold text-xl tracking-tight text-foreground">Modovate</span>
-        <nav className="flex items-center gap-6">
+        <nav className="hidden md:flex items-center gap-6">
           <button
             onClick={() => setLocation("/recommendations")}
             className="text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
             Your Plan
           </button>
-          <span className="text-sm font-semibold text-foreground border-b-2 border-foreground pb-0.5">{navLabel}</span>
+          <span className="text-sm font-semibold text-foreground">{navLabel}</span>
         </nav>
         <div className="w-9 h-9 rounded-full border border-border flex items-center justify-center">
           <User className="h-4 w-4 text-muted-foreground" />
         </div>
       </header>
 
-      <main className="flex-1 px-8 py-8 max-w-[1100px] mx-auto w-full">
+      <main className="flex-1 px-4 md:px-8 py-8 max-w-[1100px] mx-auto w-full">
         <div className="mb-2">
           <div className="flex items-center gap-2 text-xs text-muted-foreground mb-4">
             <button onClick={() => setLocation("/recommendations")} className="hover:text-foreground transition-colors">Your Plan</button>
@@ -149,7 +149,7 @@ export default function Equipment() {
           </p>
         </div>
 
-        <div className="grid grid-cols-3 gap-5 mt-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-10">
           {catData.products.map((product) => {
             const isSelected = selectedId === product.id;
             const isBestMatch = product.bestMatch;
@@ -247,7 +247,7 @@ export default function Equipment() {
           })}
         </div>
 
-        <div className="flex items-center justify-between mt-16 pt-8 border-t border-border/40">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4 mt-16 pt-8 border-t border-border/40">
           <button
             onClick={() => setLocation("/recommendations")}
             className="flex items-center gap-2 text-sm font-medium text-foreground hover:text-primary transition-colors"
@@ -266,12 +266,11 @@ export default function Equipment() {
         </div>
       </main>
 
-      <footer className="w-full px-8 py-5 flex items-center justify-between border-t border-border/40">
-        <span className="text-sm text-muted-foreground">© 2024 Modovate. All rights reserved.</span>
-        <div className="flex items-center gap-6">
-          <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Privacy Policy</a>
-          <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Terms of Service</a>
-          <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Contact Support</a>
+      <footer className="w-full px-4 md:px-8 py-5 flex flex-col md:flex-row items-center justify-between gap-3 border-t border-border/40">
+        <span className="text-xs md:text-sm text-muted-foreground">© 2024 Modovate. All rights reserved.</span>
+        <div className="flex items-center gap-4 md:gap-6">
+          <a href="#" className="text-xs md:text-sm text-muted-foreground hover:text-foreground transition-colors">Privacy Policy</a>
+          <a href="#" className="text-xs md:text-sm text-muted-foreground hover:text-foreground transition-colors">Terms of Service</a>
         </div>
       </footer>
     </div>

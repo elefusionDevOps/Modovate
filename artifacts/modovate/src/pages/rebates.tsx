@@ -36,8 +36,8 @@ export default function Rebates() {
 
   return (
     <div className="min-h-[100dvh] bg-background flex flex-col font-sans">
-      <header className="w-full px-8 py-4 flex items-center justify-between bg-background border-b border-border/30">
-        <div className="flex items-center gap-4">
+      <header className="w-full px-4 md:px-8 py-4 flex items-center justify-between bg-background border-b border-border/30">
+        <div className="flex items-center gap-3 md:gap-4">
           <button
             onClick={() => setLocation("/recommendations")}
             className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors"
@@ -48,13 +48,13 @@ export default function Rebates() {
           </button>
           <span className="font-display font-bold text-xl tracking-tight text-foreground">Modovate</span>
         </div>
-        <nav className="flex items-center gap-6">
+        <nav className="hidden md:flex items-center gap-6">
           <button onClick={() => setLocation("/assessment")} className="text-sm text-muted-foreground hover:text-foreground transition-colors">Home Profile</button>
           <button onClick={() => setLocation("/recommendations")} className="text-sm text-muted-foreground hover:text-foreground transition-colors">Energy Journey</button>
           <span className="text-sm font-semibold text-foreground">Rebates</span>
           <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Support</a>
         </nav>
-        <div className="flex items-center gap-3">
+        <div className="hidden md:flex items-center gap-3">
           <div className="w-9 h-9 rounded-full border border-border flex items-center justify-center">
             <User className="h-4 w-4 text-muted-foreground" />
           </div>
@@ -64,8 +64,8 @@ export default function Rebates() {
         </div>
       </header>
 
-      <div className="w-full bg-primary py-10 text-center">
-        <p className="font-display font-bold text-[48px] text-primary-foreground tracking-tight">
+      <div className="w-full bg-primary py-8 md:py-10 text-center px-4">
+        <p className="font-display font-bold text-[36px] md:text-[48px] text-primary-foreground tracking-tight">
           ${totalGrants.toLocaleString()}
         </p>
         <p className="text-primary-foreground/70 text-[15px] mt-1">
@@ -73,7 +73,7 @@ export default function Rebates() {
         </p>
       </div>
 
-      <main className="flex-1 px-8 py-10 max-w-[960px] mx-auto w-full">
+      <main className="flex-1 px-4 md:px-8 py-8 md:py-10 max-w-[960px] mx-auto w-full">
         <div className="mb-8">
           <h2 className="font-display font-bold text-[28px] text-foreground tracking-tight">
             Available Programs for Your Upgrade Plan
@@ -83,7 +83,7 @@ export default function Rebates() {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 gap-5 mb-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-10">
           {grants.map((rebate) => {
             const colors = levelColors[rebate.level] || levelColors.federal;
             const label = levelLabels[rebate.level] || rebate.level;
@@ -130,7 +130,7 @@ export default function Rebates() {
           <div className="mb-10">
             <h3 className="font-display font-bold text-xl text-foreground mb-1">Financing Options</h3>
             <p className="text-muted-foreground text-sm mb-4">Interest-free loans and forgivable loan programs to help fund your upgrades.</p>
-            <div className="grid grid-cols-2 gap-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               {loans.map((loan) => {
                 const colors = levelColors[loan.level] || levelColors.federal;
                 const label = levelLabels[loan.level] || loan.level;
@@ -169,9 +169,9 @@ export default function Rebates() {
           </div>
         )}
 
-        <div className="flex items-center justify-between bg-card border border-border/50 rounded-xl px-6 py-4 mb-8">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-card border border-border/50 rounded-xl px-5 md:px-6 py-4 mb-8">
           <div className="flex items-center gap-3">
-            <Shield className="h-5 w-5 text-muted-foreground" />
+            <Shield className="h-5 w-5 text-muted-foreground flex-shrink-0" />
             <p className="text-sm text-foreground">
               Your selected upgrades qualify for an estimated <strong>${totalGrants.toLocaleString()}</strong> in stacked rebates.
             </p>
@@ -189,7 +189,7 @@ export default function Rebates() {
           </button>
         </div>
 
-        <div className="flex items-start gap-10">
+        <div className="flex flex-col md:flex-row items-start gap-8 md:gap-10">
           <div className="flex-1 space-y-5">
             <h2 className="font-display font-bold text-[28px] text-foreground tracking-tight">
               Stack Your Savings
@@ -212,7 +212,7 @@ export default function Rebates() {
               </div>
             </div>
           </div>
-          <div className="w-[400px] h-[280px] rounded-2xl overflow-hidden flex-shrink-0">
+          <div className="w-full md:w-[400px] h-[220px] md:h-[280px] rounded-2xl overflow-hidden flex-shrink-0">
             <img
               src={`${basePath}modern-home-solar.png`}
               alt="Modern home with solar panels"
@@ -222,11 +222,11 @@ export default function Rebates() {
         </div>
       </main>
 
-      <footer className="w-full px-8 py-5 flex items-center justify-between border-t border-border/40">
+      <footer className="w-full px-4 md:px-8 py-5 flex flex-col md:flex-row items-center justify-between gap-3 border-t border-border/40">
         <span className="font-display font-bold text-lg text-foreground">Modovate</span>
-        <div className="flex items-center gap-6">
-          <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Privacy Policy</a>
-          <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Terms of Service</a>
+        <div className="flex items-center gap-4 md:gap-6">
+          <a href="#" className="text-xs md:text-sm text-muted-foreground hover:text-foreground transition-colors">Privacy Policy</a>
+          <a href="#" className="text-xs md:text-sm text-muted-foreground hover:text-foreground transition-colors">Terms of Service</a>
           <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Contact</a>
         </div>
         <span className="text-sm text-muted-foreground">© 2024 Editorial Intelligence. All rights reserved.</span>

@@ -44,8 +44,8 @@ export default function Contractors() {
 
   return (
     <div className="min-h-[100dvh] bg-background flex flex-col font-sans">
-      <header className="w-full px-8 py-5 flex items-center justify-between">
-        <div className="flex items-center gap-4">
+      <header className="w-full px-4 md:px-8 py-5 flex items-center justify-between">
+        <div className="flex items-center gap-3 md:gap-4">
           <button
             onClick={() => setLocation("/rebates")}
             className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors"
@@ -66,9 +66,9 @@ export default function Contractors() {
         </div>
       </header>
 
-      <main className="flex-1 px-8 pb-12 max-w-[1000px] mx-auto w-full">
+      <main className="flex-1 px-4 md:px-8 pb-12 max-w-[1000px] mx-auto w-full">
         <div className="mb-6">
-          <h1 className="font-display font-bold text-[36px] leading-tight text-foreground tracking-tight mb-3">
+          <h1 className="font-display font-bold text-[28px] md:text-[36px] leading-tight text-foreground tracking-tight mb-3">
             Matched Contractors Near You.
           </h1>
           <p className="text-muted-foreground text-[15px] leading-relaxed max-w-[560px]">
@@ -96,7 +96,7 @@ export default function Contractors() {
           ))}
         </div>
 
-        <div className="grid grid-cols-3 gap-5 mb-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-10">
           {contractorData.contractors.map((contractor) => (
             <div
               key={contractor.id}
@@ -182,12 +182,11 @@ export default function Contractors() {
         </div>
       </main>
 
-      <footer className="w-full px-8 py-5 flex items-center justify-between border-t border-border/40">
-        <span className="text-sm text-muted-foreground">© 2024 Modovate. Your data is secured with architectural-grade encryption.</span>
-        <div className="flex items-center gap-6">
-          <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors underline">Trust & Safety</a>
-          <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors underline">Privacy Policy</a>
-          <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors underline">Contractor Standards</a>
+      <footer className="w-full px-4 md:px-8 py-5 flex flex-col md:flex-row items-center justify-between gap-3 border-t border-border/40">
+        <span className="text-xs md:text-sm text-muted-foreground text-center">© 2024 Modovate. Your data is secured.</span>
+        <div className="flex items-center gap-4 md:gap-6">
+          <a href="#" className="text-xs md:text-sm text-muted-foreground hover:text-foreground transition-colors underline">Privacy Policy</a>
+          <a href="#" className="text-xs md:text-sm text-muted-foreground hover:text-foreground transition-colors underline">Contractor Standards</a>
         </div>
       </footer>
 

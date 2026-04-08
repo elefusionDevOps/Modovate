@@ -55,8 +55,8 @@ export default function Assessment() {
 
   return (
     <div className="min-h-[100dvh] bg-background flex flex-col font-sans">
-      <header className="w-full px-8 py-4 flex items-center justify-between bg-background z-10">
-        <div className="flex items-center gap-4">
+      <header className="w-full px-4 md:px-8 py-4 flex items-center justify-between bg-background z-10">
+        <div className="flex items-center gap-3 md:gap-4">
           <button
             onClick={() => setLocation("/intake")}
             className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors"
@@ -67,7 +67,7 @@ export default function Assessment() {
           </button>
           <span className="font-display font-bold text-xl tracking-tight text-foreground">Modovate</span>
         </div>
-        <nav className="flex items-center gap-6">
+        <nav className="hidden md:flex items-center gap-6">
           <span className="text-sm font-semibold text-foreground">Property Assessment</span>
           <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Solutions</a>
           <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Support</a>
@@ -87,22 +87,22 @@ export default function Assessment() {
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background/20" />
-        <div className="absolute bottom-5 left-8 flex items-center gap-2 bg-foreground/90 text-background px-4 py-2.5 rounded-full text-sm font-medium shadow-lg">
+        <div className="absolute bottom-5 left-4 md:left-8 flex items-center gap-2 bg-foreground/90 text-background px-3 md:px-4 py-2 md:py-2.5 rounded-full text-xs md:text-sm font-medium shadow-lg">
           <MapPin className="h-4 w-4" />
           <span>{address || "142 Maple Street, Toronto, ON"}</span>
         </div>
       </div>
 
-      <main className="flex-1 px-8 py-10 max-w-[960px] mx-auto w-full space-y-10">
-        <h1 className="font-display font-bold text-[32px] leading-tight text-foreground tracking-tight">
+      <main className="flex-1 px-4 md:px-8 py-8 md:py-10 max-w-[960px] mx-auto w-full space-y-8 md:space-y-10">
+        <h1 className="font-display font-bold text-[26px] md:text-[32px] leading-tight text-foreground tracking-tight">
           Here's what we found about your home.
         </h1>
 
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
           {propertyCards.map((card) => (
             <div
               key={card.label}
-              className="bg-card border border-border/50 rounded-2xl p-6 flex items-start gap-4"
+              className="bg-card border border-border/50 rounded-2xl p-4 md:p-6 flex items-start gap-3 md:gap-4"
               data-testid={`card-${card.label.toLowerCase().replace(/\s+/g, "-")}`}
             >
               <div className="w-11 h-11 rounded-xl bg-[#e8f0f0] flex items-center justify-center flex-shrink-0">
@@ -118,8 +118,8 @@ export default function Assessment() {
           ))}
         </div>
 
-        <div className="bg-card border border-border/50 rounded-xl p-8 space-y-6">
-          <div className="flex items-center justify-between">
+        <div className="bg-card border border-border/50 rounded-xl p-5 md:p-8 space-y-6">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
             <h2 className="font-display font-bold text-xl text-foreground">Performance Analysis</h2>
             <span className="text-xs font-medium px-3 py-1.5 rounded-full border border-[#c5cfc0] bg-[#f0f4ed] text-[#4a6741]">
               Status: Action Recommended
@@ -160,7 +160,7 @@ export default function Assessment() {
             </div>
           </div>
 
-          <div className="flex items-start justify-between gap-8 pt-2">
+          <div className="flex flex-col sm:flex-row items-start justify-between gap-4 sm:gap-8 pt-2">
             <p className="text-sm text-muted-foreground leading-relaxed max-w-[520px]">
               Your home's estimated energy performance is{" "}
               <strong className="text-foreground">{performanceLabel.toLowerCase()}</strong>{" "}
@@ -176,7 +176,7 @@ export default function Assessment() {
         <div className="flex justify-center pt-2 pb-4">
           <button
             onClick={() => setLocation("/recommendations")}
-            className="h-14 px-10 rounded-full bg-secondary hover:bg-secondary/90 text-secondary-foreground text-lg font-semibold shadow-lg transition-all flex items-center gap-3"
+            className="h-14 px-8 md:px-10 rounded-full bg-secondary hover:bg-secondary/90 text-secondary-foreground text-base md:text-lg font-semibold shadow-lg transition-all flex items-center gap-3"
             data-testid="button-continue-recommendations"
           >
             See Your Upgrade Recommendations
@@ -185,12 +185,11 @@ export default function Assessment() {
         </div>
       </main>
 
-      <footer className="w-full px-8 py-5 flex items-center justify-between border-t border-border/40">
-        <span className="text-sm text-muted-foreground">© 2024 Modovate. All rights reserved.</span>
-        <div className="flex items-center gap-6">
-          <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Privacy Policy</a>
-          <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Terms of Service</a>
-          <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Contact Support</a>
+      <footer className="w-full px-4 md:px-8 py-5 flex flex-col md:flex-row items-center justify-between gap-3 border-t border-border/40">
+        <span className="text-xs md:text-sm text-muted-foreground">© 2024 Modovate. All rights reserved.</span>
+        <div className="flex items-center gap-4 md:gap-6">
+          <a href="#" className="text-xs md:text-sm text-muted-foreground hover:text-foreground transition-colors">Privacy Policy</a>
+          <a href="#" className="text-xs md:text-sm text-muted-foreground hover:text-foreground transition-colors">Terms of Service</a>
         </div>
       </footer>
     </div>
