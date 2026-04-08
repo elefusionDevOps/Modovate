@@ -37,9 +37,9 @@ export default function Contractors() {
   };
 
   const pinPositions = [
-    { left: "48%", top: "58%", initials: "VH", bg: "bg-primary" },
     { left: "56%", top: "42%", initials: "GH", bg: "bg-secondary" },
-    { left: "44%", top: "70%", initials: "EC", bg: "bg-secondary" },
+    { left: "44%", top: "65%", initials: "ER", bg: "bg-secondary" },
+    { left: "65%", top: "55%", initials: "VE", bg: "bg-primary" },
   ];
 
   return (
