@@ -72,7 +72,7 @@
         "electrical_panel": 200
       },
       "applicationUrl": "https://www.ieso.ca/consumer-partnership/energy-efficiency-programs",
-      "notes": "Must be a customer of a participating Ontario electric utility. Includes Home Assistance Program and Retrofit Program.",
+      "notes": "Must be a customer of a participating Ontario electric utility. Includes Home Assistance Program, Retrofit Program, and Peak Saver Plus.",
       "active": true,
       "province": "ON",
       "utilityRestriction": null,

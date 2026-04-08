@@ -30,6 +30,7 @@ export default function Rebates() {
   const upgrades = selectedUpgrades.length > 0 ? selectedUpgrades : defaultUpgrades;
   const rebates = useMemo(() => getApplicableRebates(upgrades, address), [upgrades, address]);
   const grants = rebates.filter((r) => !r.isLoan);
+  const loans = rebates.filter((r) => r.isLoan);
   const totalGrants = grants.reduce((sum, r) => sum + r.amount, 0);
   const basePath = import.meta.env.BASE_URL || "/";
 
@@ -114,6 +115,49 @@ export default function Rebates() {
             );
           })}
         </div>
+
+        {loans.length > 0 && (
+          <div className="mb-10">
+            <h3 className="font-display font-bold text-xl text-foreground mb-1">Financing Options</h3>
+            <p className="text-muted-foreground text-sm mb-4">Interest-free loans and forgivable loan programs to help fund your upgrades.</p>
+            <div className="grid grid-cols-2 gap-5">
+              {loans.map((loan) => {
+                const colors = levelColors[loan.level] || levelColors.federal;
+                const label = levelLabels[loan.level] || loan.level;
+                return (
+                  <div
+                    key={loan.programId}
+                    className="bg-card border border-border/50 rounded-2xl p-6 flex flex-col border-l-4"
+                    style={{ borderLeftColor: loan.level === "federal" ? "#002428" : "#795900" }}
+                  >
+                    <div className="flex items-start justify-between mb-3">
+                      <span className={`text-[10px] font-bold tracking-[0.1em] uppercase px-2.5 py-1 rounded ${colors.bg} ${colors.text}`}>
+                        {label} Loan
+                      </span>
+                      <span className="font-display font-bold text-[22px] text-foreground leading-none">
+                        up to ${loan.amount.toLocaleString()}
+                      </span>
+                    </div>
+                    <h3 className="font-display font-bold text-base text-foreground mb-0.5">{loan.name}</h3>
+                    <p className="text-xs text-muted-foreground/70 mb-3">{loan.administrator}</p>
+                    <p className="text-sm text-muted-foreground leading-relaxed mb-4 flex-1">{loan.notes}</p>
+                    {loan.applicationUrl && (
+                      <a
+                        href={loan.applicationUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                      >
+                        Learn more at {new URL(loan.applicationUrl).hostname.replace("www.", "")}
+                        <ExternalLink className="h-3.5 w-3.5" />
+                      </a>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
 
         <div className="flex items-center justify-between bg-card border border-border/50 rounded-xl px-6 py-4 mb-8">
           <div className="flex items-center gap-3">
