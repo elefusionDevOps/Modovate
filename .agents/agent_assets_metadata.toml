@@ -1,0 +1,8 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "K1nLwJoKNyrnb94Y3tdfy"
+uri = "file://artifacts/modovate/public/satellite-placeholder.png"
+type = "image"
+title = "aerial-satellite-neighborhood-view"
