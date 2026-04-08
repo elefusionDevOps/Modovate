@@ -1,0 +1,74 @@
+Section 6: Mock Data Specifications
+The following files need to be created before the first demo can run. Each file has a defined
+structure and a target record count. Commit all files to the /data directory in the repository.
+1. Equipment Catalog
+File: data/equipment-catalog.json
+A JSON object with categories as keys, each containing a label, description, and products array.
+Required for Screen 5.
+Required fields per product:
+{
+"id": "string",
+"name": "string",
+"brand": "string",
+"specs": {
+"cop": "number",
+"btu": "number",
+"hspf2": "number",
+"minOperatingTemp": "number (Celsius)"
+},
+"installedCostMin": "integer (CAD)",
+"installedCostMax": "integer (CAD)",
+"rebateEligible": "boolean",
+"rebatePrograms": ["array of program ID strings"],
+"bestMatch": "boolean",
+"highlights": ["array of 2-3 plain-language feature strings"]
+}
+Target quantity: 3 to 5 products per category, across 7 categories. Approximately 25 to 30 total
+product records.
+Categories and products to include:
+- Heat Pump: Mitsubishi Zuba-Central H2i, Lennox XP25-H, Bosch IDS Ultra Quiet
+- Insulation: Closed-cell spray foam (Demilec), Blown-in cellulose, Rigid foam board
+(Rockwool ComfortBoard)
+- Electrical Panel: Siemens 200A panel, Square D QO 200A panel, Eaton BR 200A panel
+- Solar PV: LG NeON R 400W, Canadian Solar HiKu6 420W, SunPower Maxeon 6
+- EV Charger: Flo G5 (32A), ChargePoint Home Flex, Grizzl-E Classic
+- Battery Storage: Tesla Powerwall 3, LG RESU16H Prime, Sonnen Eco 10
+- Windows: Pella 350 Series triple-pane, JELD-WEN Premium Vinyl, Marvin Essential
+double-hung
+Heat pump product reference values (use these exactly for Screen 5):
+{
+"id": "mitsubishi-zuba",
+"name": "Mitsubishi Zuba-Central H2i",
+"brand": "Mitsubishi Electric",
+"specs": { "cop": 3.5, "btu": 36000, "hspf2": 10.5, "minOperatingTemp": -30 },
+"installedCostMin": 18500,
+"installedCostMax": 21000,
+"rebateEligible": true,
+"rebatePrograms": ["greener-homes"],
+"bestMatch": true,
+"highlights": ["Rated to -30C", "Qualifies for Greener Homes Grant", "Most popular in GTA"]
+}
+{
+"id": "lennox-xp25h",
+"name": "Lennox XP25-H",
+"brand": "Lennox",
+"specs": { "cop": 3.2, "btu": 42000, "hspf2": 9.8, "minOperatingTemp": -25 },
+"installedCostMin": 17200,
+"installedCostMax": 19500,
+"rebateEligible": true,
+"rebatePrograms": ["greener-homes"],
+"bestMatch": false,
+"highlights": ["Higher BTU capacity", "Lower upfront cost", "Wide dealer network"]
+}
+{
+"id": "bosch-ids-ultra",
+"name": "Bosch IDS Ultra Quiet",
+"brand": "Bosch",
+"specs": { "cop": 3.6, "btu": 30000, "hspf2": 11.0, "minOperatingTemp": -30 },
+"installedCostMin": 20500,
+"installedCostMax": 23000,
+"rebateEligible": true,
+"rebatePrograms": ["greener-homes"],
+"bestMatch": false,
+"highlights": ["Highest efficiency rating", "Ultra-quiet operation", "10-year parts warranty"]
+}
