@@ -24,6 +24,7 @@ function Router() {
       <Route path="/assessment" component={Assessment} />
       <Route path="/recommendations" component={Recommendations} />
       <Route path="/equipment" component={Equipment} />
+      <Route path="/equipment/:category" component={Equipment} />
       <Route path="/rebates" component={Rebates} />
       <Route path="/contractors" component={Contractors} />
       <Route path="/summary" component={Summary} />

@@ -1,7 +1,8 @@
 import { useEffect } from "react";
-import { useLocation } from "wouter";
+import { useLocation, useParams } from "wouter";
 import { Star, ArrowLeft, ArrowRight, User } from "lucide-react";
 import { useHomeowner } from "@/context/HomeownerContext";
+import type { UpgradeCategory } from "@/lib/energy-calculator";
 import equipmentCatalog from "@/data/equipment-catalog.json";
 
 const productImages: Record<string, string> = {
@@ -10,21 +11,108 @@ const productImages: Record<string, string> = {
   "bosch-ids-ultra": "hp-bosch.png",
 };
 
+type CatalogCategory = keyof typeof equipmentCatalog;
+
+const categoryLabels: Record<string, string> = {
+  heat_pump: "Heat Pump Options",
+  insulation: "Insulation Options",
+  electrical_panel: "Electrical Panel Options",
+  solar_pv: "Solar PV Options",
+  ev_charger: "EV Charger Options",
+  battery_storage: "Battery Storage Options",
+  windows: "Window Options",
+};
+
+function getSpecTags(product: any, category: string): string[] {
+  const specs = product.specs;
+  switch (category) {
+    case "heat_pump":
+      return [
+        `COP: ${specs.cop}`,
+        `HSPF2: ${specs.hspf2}`,
+        `${specs.btu?.toLocaleString()} BTU`,
+        `Min Temp: ${specs.minOperatingTemp}\u00b0C`,
+      ];
+    case "insulation":
+      return [
+        `R-Value: ${specs.rValue}`,
+        `Coverage: ${specs.coverageSqFt?.toLocaleString()} sq ft`,
+        specs.moistureBarrier ? "Moisture Barrier" : "No Moisture Barrier",
+      ];
+    case "electrical_panel":
+      return [
+        `${specs.amperage}A`,
+        `${specs.circuits} Circuits`,
+        specs.surgProtection ? "Surge Protection" : "No Surge Protection",
+      ];
+    case "solar_pv":
+      return [
+        `${specs.wattage}W per panel`,
+        `${specs.efficiency}% Efficiency`,
+        `${specs.warranty}-year warranty`,
+      ];
+    case "ev_charger":
+      return [
+        `${specs.amperage}A`,
+        `${specs.power} kW`,
+        specs.connector || "J1772",
+        specs.wifi ? "WiFi Enabled" : "No WiFi",
+      ];
+    case "battery_storage":
+      return [
+        `${specs.capacityKwh} kWh`,
+        `${specs.powerKw} kW`,
+        `${specs.roundTripEfficiency}% Efficiency`,
+      ];
+    case "windows":
+      return [
+        `U-Factor: ${specs.uFactor}`,
+        `${specs.panes}-pane`,
+        `${specs.gassFill} Fill`,
+      ];
+    default:
+      return [];
+  }
+}
+
+function getProductDisplayName(product: any): string {
+  const brandWords = product.brand.split(" ");
+  let name = product.name;
+  for (const word of brandWords) {
+    name = name.replace(word + " ", "");
+  }
+  return name;
+}
+
 export default function Equipment() {
   const [, setLocation] = useLocation();
+  const params = useParams<{ category?: string }>();
   const { selectedProducts, setSelectedProduct, addUpgrade, setCurrentScreen } = useHomeowner();
 
   useEffect(() => {
     setCurrentScreen(5);
   }, [setCurrentScreen]);
 
-  const heatPumpData = equipmentCatalog.heat_pump;
-  const selectedId = selectedProducts.heat_pump;
+  const category = (params.category || "heat_pump") as CatalogCategory;
+  const catData = equipmentCatalog[category];
+  const navLabel = categoryLabels[category] || "Equipment Options";
+  const selectedId = selectedProducts[category];
   const basePath = import.meta.env.BASE_URL || "/";
 
+  if (!catData) {
+    return (
+      <div className="min-h-[100dvh] bg-background flex flex-col items-center justify-center font-sans">
+        <h1 className="font-display font-bold text-2xl text-foreground mb-4">Category not found</h1>
+        <button onClick={() => setLocation("/recommendations")} className="text-primary underline">
+          Back to Recommendations
+        </button>
+      </div>
+    );
+  }
+
   const handleAddToProject = (productId: string) => {
-    setSelectedProduct("heat_pump", productId);
-    addUpgrade("heat_pump");
+    setSelectedProduct(category, productId);
+    addUpgrade(category as UpgradeCategory);
   };
 
   return (
@@ -38,7 +126,7 @@ export default function Equipment() {
           >
             Your Plan
           </button>
-          <span className="text-sm font-semibold text-foreground border-b-2 border-foreground pb-0.5">Heat Pump Options</span>
+          <span className="text-sm font-semibold text-foreground border-b-2 border-foreground pb-0.5">{navLabel}</span>
         </nav>
         <div className="w-9 h-9 rounded-full border border-border flex items-center justify-center">
           <User className="h-4 w-4 text-muted-foreground" />
@@ -50,22 +138,23 @@ export default function Equipment() {
           <div className="flex items-center gap-2 text-xs text-muted-foreground mb-4">
             <button onClick={() => setLocation("/recommendations")} className="hover:text-foreground transition-colors">Your Plan</button>
             <span>›</span>
-            <span className="font-semibold text-foreground">Heat Pump Options</span>
+            <span className="font-semibold text-foreground">{navLabel}</span>
           </div>
 
           <h1 className="font-display font-bold text-[36px] leading-tight text-foreground tracking-tight mb-4">
-            Cold Climate Heat Pumps for Your Home.
+            {catData.label} for Your Home.
           </h1>
           <p className="text-muted-foreground text-[15px] leading-relaxed max-w-[560px]">
-            Three options matched to your home size and heating load. All models operate at full capacity down to -25°C or colder.
+            {catData.description}
           </p>
         </div>
 
         <div className="grid grid-cols-3 gap-5 mt-10">
-          {heatPumpData.products.map((product) => {
+          {catData.products.map((product) => {
             const isSelected = selectedId === product.id;
             const isBestMatch = product.bestMatch;
-            const imgFile = productImages[product.id] || "hp-lennox.png";
+            const imgFile = productImages[product.id];
+            const specTags = getSpecTags(product, category);
 
             return (
               <div
@@ -86,33 +175,37 @@ export default function Equipment() {
                 )}
 
                 <div className="w-full h-[200px] bg-[#f0efec] flex items-center justify-center overflow-hidden">
-                  <img
-                    src={`${basePath}${imgFile}`}
-                    alt={product.name}
-                    className="w-full h-full object-contain p-4"
-                  />
+                  {imgFile ? (
+                    <img
+                      src={`${basePath}${imgFile}`}
+                      alt={product.name}
+                      className="w-full h-full object-contain p-4"
+                    />
+                  ) : (
+                    <div className="flex flex-col items-center gap-2 text-muted-foreground/40">
+                      <div className="w-16 h-16 rounded-xl bg-muted/50 flex items-center justify-center">
+                        <span className="text-2xl font-bold text-muted-foreground/30">{product.brand.charAt(0)}</span>
+                      </div>
+                      <span className="text-xs">{product.brand}</span>
+                    </div>
+                  )}
                 </div>
 
                 <div className="p-5 flex flex-col flex-1">
                   <p className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground/70 mb-1">
                     {product.brand}
                   </p>
-                  <h3 className="font-display font-bold text-xl text-foreground mb-4">{product.name.replace(product.brand + " ", "").replace("Mitsubishi ", "").replace("Lennox ", "").replace("Bosch ", "")}</h3>
+                  <h3 className="font-display font-bold text-xl text-foreground mb-4">
+                    {getProductDisplayName(product)}
+                  </h3>
 
-                  <div className="flex flex-wrap gap-1.5 mb-3">
-                    <span className="text-[11px] font-medium px-2 py-1 rounded border border-border/60 bg-muted/30 text-muted-foreground">
-                      COP: {product.specs.cop}
-                    </span>
-                    <span className="text-[11px] font-medium px-2 py-1 rounded border border-border/60 bg-muted/30 text-muted-foreground">
-                      HSPF2: {product.specs.hspf2}
-                    </span>
-                    <span className="text-[11px] font-medium px-2 py-1 rounded border border-border/60 bg-muted/30 text-muted-foreground">
-                      {(product.specs.btu).toLocaleString()} BTU
-                    </span>
+                  <div className="flex flex-wrap gap-1.5 mb-4">
+                    {specTags.map((tag) => (
+                      <span key={tag} className="text-[11px] font-medium px-2 py-1 rounded border border-border/60 bg-muted/30 text-muted-foreground">
+                        {tag}
+                      </span>
+                    ))}
                   </div>
-                  <span className="text-[11px] font-medium px-2 py-1 rounded border border-border/60 bg-muted/30 text-muted-foreground w-fit mb-4">
-                    Min Temp: {product.specs.minOperatingTemp}°C
-                  </span>
 
                   <div className="flex items-center gap-1.5 mb-3">
                     <Star className="h-3.5 w-3.5 fill-secondary text-secondary" />
@@ -121,7 +214,7 @@ export default function Equipment() {
 
                   {product.rebateEligible && (
                     <span className="text-[11px] font-medium px-2.5 py-1 rounded border border-[#c5cfc0] bg-[#f0f4ed] text-[#4a6741] w-fit mb-4">
-                      Eligible: up to $5,000 in rebates
+                      Rebate eligible
                     </span>
                   )}
 

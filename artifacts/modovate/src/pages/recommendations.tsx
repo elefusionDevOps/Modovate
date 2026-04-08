@@ -58,11 +58,7 @@ export default function Recommendations() {
   }, [intakeAnswers, homeProfile]);
 
   const handleExplore = (rec: UpgradeRecommendation) => {
-    if (rec.category === "heat_pump") {
-      setLocation("/equipment");
-    } else {
-      setLocation("/equipment");
-    }
+    setLocation(`/equipment/${rec.category}`);
   };
 
   const getRebateText = (rec: UpgradeRecommendation) => {
