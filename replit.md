@@ -1,5 +1,9 @@
 # Modovate POC — Build Reference
 
+## Stable Checkpoint (April 2026)
+
+All 8 screens complete, navigable, and mobile-responsive. Dynamic recommendation engine, rebate calculations, and summary dashboard all working with real Ontario data. Pending: Google Places API autocomplete and real satellite imagery (requires VITE_GOOGLE_MAPS_API_KEY).
+
 ## Overview
 
 Modovate is an 8-screen, investor-focused conversational AI web app for the Canadian energy-upgrade market (Ontario launch market). This POC is 90% investor pitch demo, 10% internal alignment. The full journey runs in 3–5 minutes.
@@ -112,11 +116,28 @@ artifacts/modovate/src/
 
 - `VITE_GOOGLE_MAPS_API_KEY` — Google Maps API key (not yet configured, satellite view uses placeholder UI)
 
+## Functional Status
+
+### Working (6/8 requirements)
+- All 8 screens navigable in full sequence with back/forward navigation
+- Intake answers feed recommendation engine: different heating types produce different recommendations and financials
+- Screen 5: 3+ equipment options per category with realistic specs, pricing, rebate badges
+- Screen 6: 3+ real rebate programs with dynamic running total derived from selected upgrades
+- Screen 7: 3 GTA contractor profiles with working Request Quote modal
+- Screen 8: Total cost, net cost, annual savings, payback period all dynamically calculated from homeowner inputs
+- Mobile responsive across all screens (390px tested)
+- Session persistence with "Continue where you left off"
+- HTML report download from summary page
+
+### Pending (requires Google Maps API key)
+- Address autocomplete with Google Places API (currently plain text input)
+- Real satellite imagery per address on Screen 1 and Screen 3 (currently static placeholder images)
+
 ## What's NOT Built (by design)
 
 - No backend server / API
 - No database / ORM
 - No authentication
 - No Google Maps integration (placeholder UI ready for API key)
-- No PDF download (toast placeholder)
+- No PDF download (HTML report available; PDF generation not implemented)
 - No Docker/containerization
