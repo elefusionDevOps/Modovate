@@ -1,76 +1,127 @@
 import { useEffect, useRef, useCallback, useState } from "react";
 
-declare global {
-  interface Window {
-    google?: {
-      maps: {
-        places: {
-          Autocomplete: new (
-            input: HTMLInputElement,
-            opts?: google.maps.places.AutocompleteOptions
-          ) => google.maps.places.Autocomplete;
-        };
-      };
-    };
-  }
-}
-
 interface PlaceResult {
   formatted_address: string;
   lat: number;
   lng: number;
 }
 
-export function usePlacesAutocomplete(
-  onSelect: (result: PlaceResult) => void
-) {
-  const inputRef = useRef<HTMLInputElement>(null);
-  const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
-  const [isReady, setIsReady] = useState(false);
+interface Suggestion {
+  description: string;
+  placeId: string;
+}
 
-  const waitForGoogle = useCallback(() => {
-    if (window.google?.maps?.places) {
-      setIsReady(true);
-      return;
-    }
-    const interval = setInterval(() => {
-      if (window.google?.maps?.places) {
-        setIsReady(true);
-        clearInterval(interval);
+export function usePlacesAutocomplete(onSelect: (result: PlaceResult) => void) {
+  const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [isApiLoaded, setIsApiLoaded] = useState(false);
+  const sessionTokenRef = useRef<google.maps.places.AutocompleteSessionToken | null>(null);
+  const debounceRef = useRef<ReturnType<typeof setTimeout>>();
+
+  useEffect(() => {
+    const check = () => {
+      try {
+        if (
+          typeof google !== "undefined" &&
+          google.maps?.places?.AutocompleteSessionToken
+        ) {
+          sessionTokenRef.current = new google.maps.places.AutocompleteSessionToken();
+          setIsApiLoaded(true);
+          return true;
+        }
+      } catch {
+        return false;
       }
-    }, 200);
-    return () => clearInterval(interval);
+      return false;
+    };
+    if (check()) return;
+    const interval = setInterval(() => {
+      if (check()) clearInterval(interval);
+    }, 500);
+    const timeout = setTimeout(() => clearInterval(interval), 8000);
+    return () => {
+      clearInterval(interval);
+      clearTimeout(timeout);
+    };
   }, []);
 
-  useEffect(() => {
-    const cleanup = waitForGoogle();
-    return cleanup;
-  }, [waitForGoogle]);
+  const fetchSuggestions = useCallback(
+    (input: string) => {
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+      if (!input.trim() || input.length < 3 || !isApiLoaded) {
+        setSuggestions([]);
+        setShowDropdown(false);
+        return;
+      }
+      debounceRef.current = setTimeout(async () => {
+        try {
+          const request: google.maps.places.AutocompleteRequest = {
+            input,
+            includedRegionCodes: ["ca"],
+            includedPrimaryTypes: ["street_address", "subpremise", "premise"],
+            sessionToken: sessionTokenRef.current!,
+          };
+          const { suggestions: results } =
+            await google.maps.places.AutocompleteSuggestion.fetchAutocompleteSuggestions(request);
+          if (results && results.length > 0) {
+            setSuggestions(
+              results.slice(0, 5).map((r) => ({
+                description: r.placePrediction?.text?.text || "",
+                placeId: r.placePrediction?.placeId || "",
+              })).filter((s) => s.description && s.placeId)
+            );
+            setShowDropdown(true);
+          } else {
+            setSuggestions([]);
+            setShowDropdown(false);
+          }
+        } catch {
+          setSuggestions([]);
+          setShowDropdown(false);
+        }
+      }, 300);
+    },
+    [isApiLoaded]
+  );
 
-  useEffect(() => {
-    if (!isReady || !inputRef.current || autocompleteRef.current) return;
-
-    const ac = new window.google!.maps.places.Autocomplete(inputRef.current, {
-      componentRestrictions: { country: "ca" },
-      types: ["address"],
-      fields: ["formatted_address", "geometry"],
-    });
-
-    ac.addListener("place_changed", () => {
-      const place = ac.getPlace();
-      if (place?.formatted_address && place?.geometry?.location) {
+  const selectSuggestion = useCallback(
+    async (suggestion: Suggestion) => {
+      setShowDropdown(false);
+      setSuggestions([]);
+      try {
+        const place = new google.maps.places.Place({ id: suggestion.placeId });
+        await place.fetchFields({ fields: ["formattedAddress", "location"] });
+        if (place.location) {
+          onSelect({
+            formatted_address: place.formattedAddress || suggestion.description,
+            lat: place.location.lat(),
+            lng: place.location.lng(),
+          });
+        }
+        sessionTokenRef.current = new google.maps.places.AutocompleteSessionToken();
+      } catch {
         onSelect({
-          formatted_address: place.formatted_address,
-          lat: place.geometry.location.lat(),
-          lng: place.geometry.location.lng(),
+          formatted_address: suggestion.description,
+          lat: 0,
+          lng: 0,
         });
       }
-    });
+    },
+    [onSelect]
+  );
 
-    autocompleteRef.current = ac;
-  }, [isReady, onSelect]);
+  const dismissDropdown = useCallback(() => {
+    setTimeout(() => setShowDropdown(false), 200);
+  }, []);
 
-  return { inputRef, isReady };
+  return {
+    suggestions,
+    showDropdown,
+    isApiLoaded,
+    fetchSuggestions,
+    selectSuggestion,
+    dismissDropdown,
+  };
 }
 
 export function getStaticMapUrl(

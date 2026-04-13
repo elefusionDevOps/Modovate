@@ -29,7 +29,20 @@ export default function Welcome() {
     setCoords({ lat: result.lat, lng: result.lng });
   }, []);
 
-  const { inputRef } = usePlacesAutocomplete(handlePlaceSelect);
+  const {
+    suggestions,
+    showDropdown,
+    fetchSuggestions,
+    selectSuggestion,
+    dismissDropdown,
+  } = usePlacesAutocomplete(handlePlaceSelect);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value;
+    setInputValue(val);
+    setCoords(null);
+    fetchSuggestions(val);
+  };
 
   const handleContinue = () => {
     if (!inputValue.trim()) return;
@@ -78,15 +91,35 @@ export default function Welcome() {
               <MapPin className="h-5 w-5 text-secondary fill-secondary/20" />
             </div>
             <input
-              ref={inputRef}
               type="text"
               placeholder="Enter your home address — e.g., 142 Maple Street, Toronto, ON"
               value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
+              onChange={handleInputChange}
               onKeyDown={handleKeyDown}
+              onBlur={dismissDropdown}
+              autoComplete="off"
               className="w-full h-14 pl-12 pr-5 rounded-xl text-[15px] bg-card border border-border shadow-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/40 transition-all placeholder:text-muted-foreground/50"
               data-testid="input-address"
             />
+            {showDropdown && suggestions.length > 0 && (
+              <div className="absolute z-50 w-full mt-1 bg-card border border-border rounded-xl shadow-xl overflow-hidden">
+                {suggestions.map((s) => (
+                  <button
+                    key={s.place_id}
+                    type="button"
+                    onMouseDown={(e) => e.preventDefault()}
+                    onClick={() => {
+                      selectSuggestion(s);
+                      setInputValue(s.description);
+                    }}
+                    className="w-full px-4 py-3 text-left text-sm text-foreground hover:bg-muted/60 transition-colors flex items-center gap-3 border-b border-border/30 last:border-b-0"
+                  >
+                    <MapPin className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+                    <span>{s.description}</span>
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
           <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden shadow-lg border border-border/30">
