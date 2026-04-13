@@ -1,8 +1,9 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useLocation } from "wouter";
 import { MapPin, LayoutGrid, Calendar, Home, Flag, Banknote, Gauge, ArrowRight, ChevronLeft } from "lucide-react";
 import { useHomeowner } from "@/context/HomeownerContext";
 import { lookupAddressProfile, getEnerGuideRating, getEstimatedAnnualEnergyCost } from "@/lib/energy-calculator";
+import { getStaticMapUrl } from "@/hooks/use-places-autocomplete";
 import type { HeatingSystem } from "@/lib/energy-calculator";
 
 function getPerformanceLabel(rating: number): string {
@@ -41,6 +42,19 @@ export default function Assessment() {
   const markerPercent = getPerformancePercent(energuideRating);
   const potentialSavings = Math.round(annualEnergyCost * 0.33);
   const roofAreaSqft = Math.round(profile.roofAreaSqm * 10.764);
+
+  const [coords] = useState<{ lat: number; lng: number } | null>(() => {
+    try {
+      const stored = sessionStorage.getItem("modovate_coords");
+      return stored ? JSON.parse(stored) : null;
+    } catch {
+      return null;
+    }
+  });
+
+  const satelliteSrc = coords
+    ? getStaticMapUrl(coords.lat, coords.lng, 1200, 500, 19)
+    : `${basePath}roof-satellite.png`;
 
   const propertyCards = [
     { icon: LayoutGrid, label: "Property Size", value: profile.estimatedSqft.toLocaleString() + " sq ft", highlight: false },
@@ -82,7 +96,7 @@ export default function Assessment() {
 
       <div className="relative w-full h-[340px] overflow-hidden">
         <img
-          src={`${basePath}roof-satellite.png`}
+          src={satelliteSrc}
           alt="Aerial view of your property"
           className="w-full h-full object-cover"
         />

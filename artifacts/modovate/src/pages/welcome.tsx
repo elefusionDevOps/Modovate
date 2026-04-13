@@ -1,14 +1,17 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useLocation } from "wouter";
 import { MapPin, Home, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useHomeowner } from "@/context/HomeownerContext";
+import { usePlacesAutocomplete, getStaticMapUrl } from "@/hooks/use-places-autocomplete";
+
 const satelliteImg = `${import.meta.env.BASE_URL}satellite-placeholder.png`;
 
 export default function Welcome() {
   const [, setLocation] = useLocation();
   const { address, currentScreen, setAddress, resetState } = useHomeowner();
   const [inputValue, setInputValue] = useState("");
+  const [coords, setCoords] = useState<{ lat: number; lng: number } | null>(null);
   const hasExistingSession = !!(address && currentScreen > 1);
 
   const screenRoutes: Record<number, string> = {
@@ -21,18 +24,33 @@ export default function Welcome() {
     8: "/summary",
   };
 
+  const handlePlaceSelect = useCallback((result: { formatted_address: string; lat: number; lng: number }) => {
+    setInputValue(result.formatted_address);
+    setCoords({ lat: result.lat, lng: result.lng });
+  }, []);
+
+  const { inputRef } = usePlacesAutocomplete(handlePlaceSelect);
+
   const handleContinue = () => {
     if (!inputValue.trim()) return;
     resetState();
     setAddress(inputValue);
+    if (coords) {
+      sessionStorage.setItem("modovate_coords", JSON.stringify(coords));
+    }
     setLocation("/intake");
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
+      e.preventDefault();
       handleContinue();
     }
   };
+
+  const satelliteSrc = coords
+    ? getStaticMapUrl(coords.lat, coords.lng, 800, 600, 19)
+    : satelliteImg;
 
   return (
     <div className="min-h-[100dvh] bg-background flex flex-col font-sans">
@@ -56,10 +74,11 @@ export default function Welcome() {
 
         <div className="w-full max-w-[540px] mt-8 space-y-6 animate-in fade-in slide-in-from-bottom-6 duration-700 delay-150">
           <div className="relative">
-            <div className="absolute left-4 top-1/2 -translate-y-1/2 z-10">
+            <div className="absolute left-4 top-1/2 -translate-y-1/2 z-10 pointer-events-none">
               <MapPin className="h-5 w-5 text-secondary fill-secondary/20" />
             </div>
             <input
+              ref={inputRef}
               type="text"
               placeholder="Enter your home address — e.g., 142 Maple Street, Toronto, ON"
               value={inputValue}
@@ -72,7 +91,7 @@ export default function Welcome() {
 
           <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden shadow-lg border border-border/30">
             <img
-              src={satelliteImg}
+              src={satelliteSrc}
               alt="Satellite aerial view of a residential neighborhood"
               className="absolute inset-0 w-full h-full object-cover"
               style={{ objectPosition: "center 55%" }}
@@ -83,11 +102,13 @@ export default function Welcome() {
                 Satellite View
               </span>
             </div>
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-              <div className="w-11 h-11 rounded-full bg-primary/90 flex items-center justify-center shadow-xl ring-3 ring-white/30">
-                <Home className="h-5 w-5 text-primary-foreground" />
+            {!coords && (
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                <div className="w-11 h-11 rounded-full bg-primary/90 flex items-center justify-center shadow-xl ring-3 ring-white/30">
+                  <Home className="h-5 w-5 text-primary-foreground" />
+                </div>
               </div>
-            </div>
+            )}
           </div>
 
           <div className="flex flex-col items-center gap-4 pt-2">
