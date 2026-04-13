@@ -1,0 +1,43 @@
+The POC is investor-ready when every item on this checklist is true. Use this list to self-check
+before the first investor walkthrough.
+Functional
+- All 8 screens are navigable in sequence (click through the full homeowner journey
+without any broken links or missing routes)
+- Address autocomplete works using the Google Places API (real Canadian address
+suggestions appear as you type)
+- Selecting a Toronto or GTA address loads a satellite map of that property on Screen 1
+and Screen 3
+- Intake answers (Screen 2) feed into the recommendation engine: a gas furnace home
+and an electric baseboard home produce different recommendations on Screen 4
+- Screen 5 shows at least 3 equipment options for the Heat Pump category with realistic
+specs, pricing, and rebate badges
+- Screen 6 shows at least 3 rebate programs with real program names, real dollar
+amounts, and a running total that reflects the selected upgrades (not a hardcoded
+number)
+- Screen 7 shows 3 contractor profiles with realistic GTA details and a "Request Quote"
+CTA that opens and closes a modal
+- Screen 8 shows total cost, net cost after rebates, annual savings, and payback period all
+derived from the homeowner's inputs — different intake answers produce different
+numbers
+Visual Quality
+- All 8 screens use a consistent color palette, typography, and spacing (no visual drift
+between screens)
+- No placeholder text anywhere (no "Lorem ipsum", no "[INSERT PRODUCT NAME]", no
+"TODO", no "[TBD]")
+- No broken images or missing icons
+- The design looks polished and professional at first impression, not like a prototype
+- Works correctly on desktop Chrome and Safari (primary investor demo environment)
+- Works correctly on a mobile browser at 390px viewport width (iPhone 15 Pro width):
+layout stacks correctly, no horizontal scrolling, no clipped content
+- Page transitions load in under 2 to 3 seconds per screen advance on a standard
+broadband connection
+Demo-ability
+- Deployed on Vercel with a shareable URL (no local setup required by the investor)
+- A first-time visitor with no instructions can navigate the full journey without help from the
+Modovate team
+- The full journey (Screen 1 to Screen 8) takes 3 to 5 minutes to complete at a normal
+pace
+- The "Request Quote" CTA on Screen 7 responds (opens a modal — a form that does
+not need to submit to a backend)
+- The "Download Report" CTA on Screen 8 responds (triggers browser print, a static PDF,
+or a placeholder page — something must happen)
