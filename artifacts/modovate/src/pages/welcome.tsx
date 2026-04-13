@@ -105,7 +105,7 @@ export default function Welcome() {
               <div className="absolute z-50 w-full mt-1 bg-card border border-border rounded-xl shadow-xl overflow-hidden">
                 {suggestions.map((s) => (
                   <button
-                    key={s.place_id}
+                    key={s.placeId}
                     type="button"
                     onMouseDown={(e) => e.preventDefault()}
                     onClick={() => {
