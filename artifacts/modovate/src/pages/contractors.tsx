@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
+import { useDocumentTitle } from "@/hooks/use-document-title";
 import { Star, MapPin, Bell, User, ArrowRight, CheckCircle, ChevronLeft } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -9,6 +10,7 @@ import { useHomeowner } from "@/context/HomeownerContext";
 import contractorData from "@/data/contractor-profiles.json";
 
 export default function Contractors() {
+  useDocumentTitle("Matched Contractors");
   const [, setLocation] = useLocation();
   const { setCurrentScreen } = useHomeowner();
   const { toast } = useToast();

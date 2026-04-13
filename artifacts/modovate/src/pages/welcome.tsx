@@ -1,5 +1,6 @@
 import { useState, useCallback } from "react";
 import { useLocation } from "wouter";
+import { useDocumentTitle } from "@/hooks/use-document-title";
 import { MapPin, Home, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useHomeowner } from "@/context/HomeownerContext";
@@ -8,6 +9,7 @@ import { usePlacesAutocomplete, getStaticMapUrl } from "@/hooks/use-places-autoc
 const satelliteImg = `${import.meta.env.BASE_URL}satellite-placeholder.png`;
 
 export default function Welcome() {
+  useDocumentTitle("Welcome");
   const [, setLocation] = useLocation();
   const { address, currentScreen, setAddress, resetState } = useHomeowner();
   const [inputValue, setInputValue] = useState("");

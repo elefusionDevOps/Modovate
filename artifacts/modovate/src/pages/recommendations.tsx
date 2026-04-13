@@ -1,5 +1,6 @@
 import { useEffect, useMemo } from "react";
 import { useLocation } from "wouter";
+import { useDocumentTitle } from "@/hooks/use-document-title";
 import {
   Snowflake, Home, Zap, Sun, Car, BatteryCharging, LayoutGrid,
   Compass, TrendingUp, Headphones, Flag, ArrowRight, ChevronLeft,
@@ -36,6 +37,7 @@ const sidebarItems = [
 ];
 
 export default function Recommendations() {
+  useDocumentTitle("Upgrade Recommendations");
   const [, setLocation] = useLocation();
   const { intakeAnswers, homeProfile, setCurrentScreen } = useHomeowner();
 

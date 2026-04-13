@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useLocation, useParams } from "wouter";
+import { useDocumentTitle } from "@/hooks/use-document-title";
 import { Star, ArrowLeft, ArrowRight, User } from "lucide-react";
 import { useHomeowner } from "@/context/HomeownerContext";
 import type { UpgradeCategory } from "@/lib/energy-calculator";
@@ -85,6 +86,7 @@ function getProductDisplayName(product: any): string {
 }
 
 export default function Equipment() {
+  useDocumentTitle("Equipment Options");
   const [, setLocation] = useLocation();
   const params = useParams<{ category?: string }>();
   const { selectedProducts, setSelectedProduct, addUpgrade, setCurrentScreen } = useHomeowner();

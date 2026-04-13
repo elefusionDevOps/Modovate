@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useLocation } from "wouter";
+import { useDocumentTitle } from "@/hooks/use-document-title";
 import { MapPin, LayoutGrid, Calendar, Home, Flag, Banknote, Gauge, ArrowRight, ChevronLeft } from "lucide-react";
 import { useHomeowner } from "@/context/HomeownerContext";
 import { lookupAddressProfile, getEnerGuideRating, getEstimatedAnnualEnergyCost } from "@/lib/energy-calculator";
@@ -19,6 +20,7 @@ function getPerformancePercent(rating: number): number {
 }
 
 export default function Assessment() {
+  useDocumentTitle("Property Assessment");
   const [, setLocation] = useLocation();
   const { address, intakeAnswers, setHomeProfile, setCurrentScreen } = useHomeowner();
 

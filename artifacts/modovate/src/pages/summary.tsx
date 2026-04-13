@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useCallback } from "react";
 import { useLocation } from "wouter";
+import { useDocumentTitle } from "@/hooks/use-document-title";
 import { Check, Leaf, MessageSquareMore, FileText, FileDown, ChevronLeft } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useHomeowner } from "@/context/HomeownerContext";
@@ -74,6 +75,7 @@ const fallbackBreakdown: UpgradeBreakdownItem[] = [
 ];
 
 export default function Summary() {
+  useDocumentTitle("Project Summary");
   const [, setLocation] = useLocation();
   const { selectedUpgrades, selectedProducts, intakeAnswers, homeProfile, setCurrentScreen } = useHomeowner();
   const { toast } = useToast();

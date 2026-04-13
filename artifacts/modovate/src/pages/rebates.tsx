@@ -1,5 +1,6 @@
 import { useEffect, useMemo } from "react";
 import { useLocation } from "wouter";
+import { useDocumentTitle } from "@/hooks/use-document-title";
 import { ExternalLink, Shield, CheckCircle, User, Settings, ChevronLeft } from "lucide-react";
 import { useHomeowner } from "@/context/HomeownerContext";
 import { getApplicableRebates } from "@/lib/energy-calculator";
@@ -20,6 +21,7 @@ const levelLabels: Record<string, string> = {
 const defaultUpgrades: UpgradeCategory[] = ["heat_pump", "insulation", "electrical_panel", "solar_pv"];
 
 export default function Rebates() {
+  useDocumentTitle("Available Rebates");
   const [, setLocation] = useLocation();
   const { selectedUpgrades, address, setCurrentScreen } = useHomeowner();
 

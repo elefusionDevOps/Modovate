@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useLocation } from "wouter";
+import { useDocumentTitle } from "@/hooks/use-document-title";
 import { ArrowLeft, ShieldCheck } from "lucide-react";
 import { useHomeowner } from "@/context/HomeownerContext";
 import type { HeatingSystem } from "@/lib/energy-calculator";
@@ -75,6 +76,7 @@ const questions: Question[] = [
 const TOTAL_STEPS = 7;
 
 export default function Intake() {
+  useDocumentTitle("Home Intake");
   const [, setLocation] = useLocation();
   const { setIntakeAnswers, setCurrentScreen } = useHomeowner();
   const [currentQ, setCurrentQ] = useState(0);
