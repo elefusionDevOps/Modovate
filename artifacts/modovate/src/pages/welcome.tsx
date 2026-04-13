@@ -48,7 +48,7 @@ export default function Welcome() {
     if (!inputValue.trim()) return;
     resetState();
     setAddress(inputValue);
-    if (coords) {
+    if (coords && !isNaN(coords.lat) && !isNaN(coords.lng)) {
       sessionStorage.setItem("modovate_coords", JSON.stringify(coords));
     }
     setLocation("/intake");
@@ -61,7 +61,7 @@ export default function Welcome() {
     }
   };
 
-  const satelliteSrc = coords
+  const satelliteSrc = coords && !isNaN(coords.lat) && !isNaN(coords.lng)
     ? getStaticMapUrl(coords.lat, coords.lng, 800, 600, 19)
     : satelliteImg;
 

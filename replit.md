@@ -2,7 +2,7 @@
 
 ## Stable Checkpoint (April 2026)
 
-All 8 screens complete, navigable, and mobile-responsive. Dynamic recommendation engine, rebate calculations, and summary dashboard all working with real Ontario data. Pending: Google Places API autocomplete and real satellite imagery (requires VITE_GOOGLE_MAPS_API_KEY).
+All 8 screens complete, navigable, and mobile-responsive. Dynamic recommendation engine, rebate calculations, and summary dashboard all working with real Ontario data. Google Places autocomplete and real satellite imagery fully integrated and working.
 
 ## Overview
 
@@ -114,12 +114,22 @@ artifacts/modovate/src/
 
 ## Environment Variables
 
-- `VITE_GOOGLE_MAPS_API_KEY` — Google Maps API key (not yet configured, satellite view uses placeholder UI)
+- `VITE_GOOGLE_MAPS_API_KEY` — Google Maps API key (configured, powers Places autocomplete + satellite imagery)
+
+## Google Maps Integration
+
+- **Places Autocomplete**: Custom `use-places-autocomplete.ts` hook with dual-API support (new `AutocompleteSuggestion` + legacy `AutocompleteService` fallback)
+- **Satellite Imagery**: Static Maps API renders real satellite view on Welcome + Assessment pages after address selection
+- **Coords**: Stored in `sessionStorage` key `modovate_coords` as `{lat, lng}` JSON
+- **Script Loading**: `index.html` loads Google Maps JS with Places library + cache-busting param
+- **Required APIs** (Google Cloud Console): Maps JavaScript API, Places API (New), Maps Static API, Geocoding API
 
 ## Functional Status
 
-### Working (6/8 requirements)
+### Working (8/8 requirements)
 - All 8 screens navigable in full sequence with back/forward navigation
+- Google Places autocomplete on address entry (Screen 1)
+- Real satellite imagery per address on Screen 1 and Screen 3
 - Intake answers feed recommendation engine: different heating types produce different recommendations and financials
 - Screen 5: 3+ equipment options per category with realistic specs, pricing, rebate badges
 - Screen 6: 3+ real rebate programs with dynamic running total derived from selected upgrades
@@ -129,15 +139,10 @@ artifacts/modovate/src/
 - Session persistence with "Continue where you left off"
 - HTML report download from summary page
 
-### Pending (requires Google Maps API key)
-- Address autocomplete with Google Places API (currently plain text input)
-- Real satellite imagery per address on Screen 1 and Screen 3 (currently static placeholder images)
-
 ## What's NOT Built (by design)
 
 - No backend server / API
 - No database / ORM
 - No authentication
-- No Google Maps integration (placeholder UI ready for API key)
 - No PDF download (HTML report available; PDF generation not implemented)
 - No Docker/containerization

@@ -43,10 +43,14 @@ export default function Assessment() {
   const potentialSavings = Math.round(annualEnergyCost * 0.33);
   const roofAreaSqft = Math.round(profile.roofAreaSqm * 10.764);
 
+  const basePath = import.meta.env.BASE_URL || "/";
+
   const [coords] = useState<{ lat: number; lng: number } | null>(() => {
     try {
       const stored = sessionStorage.getItem("modovate_coords");
-      return stored ? JSON.parse(stored) : null;
+      const parsed = stored ? JSON.parse(stored) : null;
+      if (parsed && (parsed.lat !== 0 || parsed.lng !== 0)) return parsed;
+      return null;
     } catch {
       return null;
     }
@@ -64,8 +68,6 @@ export default function Assessment() {
     { icon: Banknote, label: "Annual Energy Cost", value: "$" + annualEnergyCost.toLocaleString(), highlight: false },
     { icon: Gauge, label: "Current Energy Rating", value: performanceLabel, highlight: true },
   ];
-
-  const basePath = import.meta.env.BASE_URL || "/";
 
   return (
     <div className="min-h-[100dvh] bg-background flex flex-col font-sans">

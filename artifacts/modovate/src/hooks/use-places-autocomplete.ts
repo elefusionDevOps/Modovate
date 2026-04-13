@@ -155,8 +155,8 @@ export function usePlacesAutocomplete(onSelect: (result: PlaceResult) => void) {
       } catch {
         onSelect({
           formatted_address: suggestion.description,
-          lat: 0,
-          lng: 0,
+          lat: NaN,
+          lng: NaN,
         });
       }
     },
