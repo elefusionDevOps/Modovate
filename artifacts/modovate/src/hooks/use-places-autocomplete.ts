@@ -1,3 +1,4 @@
+/// <reference types="google.maps" />
 import { useEffect, useRef, useCallback, useState } from "react";
 
 interface PlaceResult {
@@ -35,7 +36,7 @@ export function usePlacesAutocomplete(onSelect: (result: PlaceResult) => void) {
   const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
   const [showDropdown, setShowDropdown] = useState(false);
   const [isApiLoaded, setIsApiLoaded] = useState(false);
-  const debounceRef = useRef<ReturnType<typeof setTimeout>>();
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const serviceRef = useRef<google.maps.places.AutocompleteService | null>(null);
 
   useEffect(() => {
